@@ -1,4 +1,5 @@
-import getPackage from '../util/getPackage.js';
+import getPackage       from '../util/getPackage.js';
+import getPackagePath   from '../util/getPackagePath.js';
 
 /**
  * @typedef {object} NPMPackageData
@@ -26,9 +27,14 @@ import getPackage from '../util/getPackage.js';
  */
 export default class PackageUtil
 {
-   static getPackage(filePath, basePath = process.cwd())
+   static getPackage(filePath, basePath)
    {
       return getPackage(filePath, basePath);
+   }
+
+   static getPackagePath(filePath, basePath)
+   {
+      return getPackagePath(filePath, basePath);
    }
 
    /**
@@ -110,6 +116,7 @@ export function onPluginLoad(ev)
    const eventbus = ev.eventbus;
 
    eventbus.on('typhonjs:util:package:get', PackageUtil.getPackage, PackageUtil);
+   eventbus.on('typhonjs:util:package:path:get', PackageUtil.getPackagePath, PackageUtil);
    eventbus.on('typhonjs:util:package:object:format', PackageUtil.format, PackageUtil);
 }
 
