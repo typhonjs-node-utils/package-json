@@ -1,3 +1,5 @@
+import path       from 'path';
+
 import { assert } from 'chai';
 
 import { getPackage }   from '../../src/index.js';
@@ -67,5 +69,11 @@ describe(`getPackage`, () =>
    {
       const result = getPackage(import.meta.url);
       assert.strictEqual(result.name, '@typhonjs-node-utils/package-util');
+   });
+
+   it(`Dummy near root`, () =>
+   {
+      const result = getPackage(`${path.sep}dummy-dir${path.sep}dummy-file.js`);
+      assert.strictEqual(result, null);
    });
 });

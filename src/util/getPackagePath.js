@@ -26,7 +26,7 @@ function getDirectoryActual(directory, basePath)
    }
    catch (_) { /**/ }
 
-   if (directory === basePath) { return null; }
+   if (directory === basePath || directory === path.sep) { return null; }
 
    const parent = path.dirname(directory);
 
