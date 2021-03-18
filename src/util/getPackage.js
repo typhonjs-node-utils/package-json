@@ -11,9 +11,11 @@ const resultsCache = new Map();
  *
  * @param {string}   basePath - Base path to stop traversing.
  *
+ * @param {string}   rootDir - Absolute stopping point at root directory.
+ *
  * @returns {object|null} Loaded directory or null if basePath has been reached. Recursive call.
  */
-function getDirectoryActual(directory, basePath)
+function getDirectoryActual(directory, basePath, rootDir)
 {
    try
    {
@@ -26,11 +28,11 @@ function getDirectoryActual(directory, basePath)
    }
    catch (_) { /**/ }
 
-   if (directory === basePath || directory === path.sep) { return null; }
+   if (directory === basePath || directory === rootDir) { return null; }
 
    const parent = path.dirname(directory);
 
-   return getDirectory(parent, basePath);
+   return getDirectory(parent, basePath, rootDir);
 }
 
 /**
@@ -40,15 +42,17 @@ function getDirectoryActual(directory, basePath)
  *
  * @param {string}   basePath - Base path to stop traversing.
  *
+ * @param {string}   rootDir - Absolute stopping point at root directory.
+ *
  * @returns {object|null} Loaded package.json or null.
  */
-function getDirectory(directory, basePath)
+function getDirectory(directory, basePath, rootDir)
 {
    const key = `${directory}:${basePath}`;
 
    if (resultsCache.has(key)) { return resultsCache.get(key); }
 
-   const result = getDirectoryActual(directory, basePath);
+   const result = getDirectoryActual(directory, basePath, rootDir);
 
    resultsCache.set(key, result);
 
@@ -84,5 +88,7 @@ export default function getPackage(filePath, basePath = process.cwd())
    const resolvedBasePath = fs.existsSync(basePath) && fs.lstatSync(basePath).isDirectory() ? path.resolve(basePath) :
     path.resolve(path.dirname(basePath));
 
-   return getDirectory(resolvedFilePath, resolvedBasePath);
+   const rootDir = path.parse(resolvedFilePath).root;
+
+   return getDirectory(resolvedFilePath, resolvedBasePath, rootDir);
 }
