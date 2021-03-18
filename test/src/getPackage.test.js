@@ -62,4 +62,10 @@ describe(`getPackage`, () =>
        './test/fixtures/packages/no-package-json');
       assert.strictEqual(result, null);
    });
+
+   it(`import.meta.url`, () =>
+   {
+      const result = getPackage(import.meta.url);
+      assert.strictEqual(result.name, '@typhonjs-node-utils/package-util');
+   });
 });

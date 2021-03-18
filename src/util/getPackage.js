@@ -1,5 +1,6 @@
 import fs   from 'fs';
 import path from 'path';
+import url  from 'url';
 
 const resultsCache = new Map();
 
@@ -65,6 +66,18 @@ function getDirectory(directory, basePath)
  */
 export default function getPackage(filePath, basePath = process.cwd())
 {
+   // Convert file URL to path
+   if (filePath.startsWith('file:/'))
+   {
+      filePath = url.fileURLToPath(filePath);
+   }
+
+   // Convert file URL to path
+   if (basePath.startsWith('file:/'))
+   {
+      basePath = url.fileURLToPath(basePath);
+   }
+
    const resolvedFilePath = fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory() ? path.resolve(filePath) :
     path.resolve(path.dirname(filePath));
 

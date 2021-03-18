@@ -1,7 +1,7 @@
 {
   "name": "@typhonjs-node-utils/package-util",
   "description": "Provides several utility methods for working with `package.json`.",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "typhonrt",
   "type": "module",
   "main": "src/index.js",
