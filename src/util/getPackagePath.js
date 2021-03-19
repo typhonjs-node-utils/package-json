@@ -2,69 +2,13 @@ import fs   from 'fs';
 import path from 'path';
 import url  from 'url';
 
-const resultsCache = new Map();
-
 /**
- * Attempt to load `package.json` at `directory`.
+ * @typedef {object} PackageObjData
  *
- * @param {string}   directory - Current directory to find `package.json`.
- *
- * @param {string}   basePath - Base path to stop traversing.
- *
- * @param {string}   rootPath - The absolute root path to stop traversing.
- *
- * @returns {object|null} Loaded directory or null if basePath has been reached. Recursive call.
+ * @property {object|undefined}  packageObj - Loaded `package.json` object.
+ * @property {string|undefined}  packagePath - Path of loaded `package.json` object.
+ * @property {Error|undefined}   error - An error instance.
  */
-function getDirectoryActual(directory, basePath, rootPath)
-{
-   const packagePath = path.resolve(directory, 'package.json');
-
-   if (fs.existsSync(packagePath))
-   {
-      try
-      {
-         return {
-            packageObj: JSON.parse(fs.readFileSync(packagePath, 'utf-8')),
-            path: packagePath
-         };
-      }
-      catch (_)
-      {
-         // Return null if failed to load `package.json`; assume it is malformed and stop resolution.
-         return null;
-      }
-   }
-
-   if (directory === basePath || directory === rootPath) { return null; }
-
-   const parent = path.dirname(directory);
-
-   return getDirectory(parent, basePath, rootPath);
-}
-
-/**
- * Attempt to load from cache or invoke `getDirectoryActual`.
- *
- * @param {string}   directory - Current directory to find `package.json`.
- *
- * @param {string}   basePath - Base path to stop traversing.
- *
- * @param {string}   rootPath - The absolute root path to stop traversing.
- *
- * @returns {{package: object, path: string}|null} Loaded package.json or null.
- */
-function getDirectory(directory, basePath, rootPath)
-{
-   const key = `${directory}:${basePath}`;
-
-   if (resultsCache.has(key)) { return resultsCache.get(key); }
-
-   const result = getDirectoryActual(directory, basePath, rootPath);
-
-   resultsCache.set(key, result);
-
-   return result;
-}
 
 /**
  * Attempts to traverse from `filePath` to `basePath` attempting to load `package.json` along with the package path.
@@ -76,12 +20,22 @@ function getDirectory(directory, basePath, rootPath)
  *
  * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not provided.
  *
- * @returns {{package: object, path: string}|null} Loaded package.json and path or null if basePath or root
- * directory has been reached.
+ * @returns {PackageObjData} Loaded package.json / path or potentially an error.
  */
-function getPackagePath(filePath, basePath = void 0)
+export default function getPackagePath(filePath, basePath = void 0)
 {
-   let resolvedBasePath, resolvedFilePath, rootFilePath;
+   if (typeof filePath !== 'string' && !(filePath instanceof URL))
+   {
+      return { error: new TypeError(`'filePath' is not a 'string' or file 'URL'.`) };
+   }
+
+   if (basePath !== void 0 && typeof basePath !== 'string' && !(basePath instanceof URL))
+   {
+      return { error: new TypeError(`'basePath' is not a 'string' or file 'URL'.`) };
+   }
+
+   // packagePath stores the attempted loaded package.json file.
+   let packagePath;
 
    try
    {
@@ -97,14 +51,14 @@ function getPackagePath(filePath, basePath = void 0)
          filePath = url.fileURLToPath(filePath);
       }
 
-      // Handle `filePath` as a directory or path with file name.
-      resolvedFilePath = fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory() ?
+      // Handle `filePath` as a directory or get directory of path with file name.
+      let currentDirectory = fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory() ?
        path.resolve(filePath) : path.resolve(path.dirname(filePath));
 
       // Convert basePath to root of resolved file path if not a string.
       if (typeof basePath !== 'string')
       {
-         basePath = path.parse(resolvedFilePath).root;
+         basePath = path.parse(currentDirectory).root;
       }
 
       // Convert string file URL to path.
@@ -113,27 +67,43 @@ function getPackagePath(filePath, basePath = void 0)
          basePath = url.fileURLToPath(basePath);
       }
 
-      // Handle `basePath` as a directory or path with file name.
-      resolvedBasePath = fs.existsSync(basePath) && fs.lstatSync(basePath).isDirectory() ? path.resolve(basePath) :
+      // Handle `basePath` as a directory or convert a path with file name to a directory.
+      const baseDirectory = fs.existsSync(basePath) && fs.lstatSync(basePath).isDirectory() ? path.resolve(basePath) :
        path.resolve(path.dirname(basePath));
 
       // If the resolved paths do not exist then return null.
-      if (!fs.existsSync(resolvedBasePath) || !fs.existsSync(resolvedFilePath))
+      if (!fs.existsSync(baseDirectory) || !fs.existsSync(currentDirectory))
       {
-         return null;
+         return { error: new Error(`Could not resolve 'filePath' or 'basePath'`) };
       }
 
       // Ensure we track the root of the resolved file path to stop recursion.
-      rootFilePath = path.parse(resolvedFilePath).root;
+      const rootPath = path.parse(currentDirectory).root;
+
+      // Below is an iterative loop that stops at any base directory provided or the root directory of the provided
+      // file path. `packagePath` stores the load attempt for `package.json` resolved at the current directory as
+      // each iteration pops off a subdirectory.
+
+      do
+      {
+         packagePath = path.resolve(currentDirectory, 'package.json');
+
+         if (fs.existsSync(packagePath))
+         {
+            return {
+               packageObj: JSON.parse(fs.readFileSync(packagePath, 'utf-8')),
+               packagePath
+            };
+         }
+
+         if (currentDirectory === baseDirectory) { break; }
+
+      } while ((currentDirectory = path.dirname(currentDirectory)) !== rootPath);
    }
-   catch (err)
+   catch (error)
    {
-      return null;
+      return { packagePath, error };
    }
 
-   return getDirectory(resolvedFilePath, resolvedBasePath, rootFilePath);
+   return { error: new Error(`No 'package.json' located`) };
 }
-
-getPackagePath.clearCache = () => resultsCache.clear();
-
-export default getPackagePath;

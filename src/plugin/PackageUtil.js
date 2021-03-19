@@ -3,6 +3,14 @@ import getPackagePath   from '../util/getPackagePath.js';
 import getPackageType   from '../util/getPackageType.js';
 
 /**
+ * @typedef {object} PackageObjData
+ *
+ * @property {object|undefined}  packageObj - Loaded `package.json` object.
+ * @property {string|undefined}  packagePath - Path of loaded `package.json` object.
+ * @property {Error|undefined}   error - An error instance.
+ */
+
+/**
  * @typedef {object} NPMPackageData
  *
  * @property {string}   name -
@@ -24,11 +32,6 @@ import getPackageType   from '../util/getPackageType.js';
 export default class PackageUtil
 {
    /**
-    * Clears the "getPackage" cache.
-    */
-   static clearCache() { getPackagePath.clearCache(); }
-
-   /**
     * Attempts to traverse from `filePath` to `basePath` attempting to load `package.json`.
     *
     * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
@@ -39,7 +42,8 @@ export default class PackageUtil
     * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
     *                                    provided.
     *
-    * @returns {object|null} Loaded package.json or null if basePath or root directory has been reached.
+    * @returns {object|undefined} Loaded `package.json` or undefined if an error has occurred or basePath or root
+    *                             directory has been reached.
     */
    static getPackage(filePath, basePath = void 0)
    {
@@ -57,7 +61,7 @@ export default class PackageUtil
     * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
     *                                    provided.
     *
-    * @returns {object} Formatted package.json or empty if an error has occurred.
+    * @returns {object} Formatted package.json or empty object if an error has occurred.
     */
    static getPackageAndFormat(filePath, basePath = void 0)
    {
@@ -75,8 +79,7 @@ export default class PackageUtil
     * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
     *                                    provided.
     *
-    * @returns {{package: object, path: string}|null} Loaded package.json and path or null if basePath or root
-    * directory has been reached.
+    * @returns {PackageObjData} Loaded package.json / path or potentially an error.
     */
    static getPackagePath(filePath, basePath = void 0)
    {
@@ -183,7 +186,6 @@ export function onPluginLoad(ev)
 {
    const eventbus = ev.eventbus;
 
-   eventbus.on('typhonjs:util:package:cache:clear', PackageUtil.clearCache, PackageUtil);
    eventbus.on('typhonjs:util:package:get', PackageUtil.getPackage, PackageUtil);
    eventbus.on('typhonjs:util:package:object:format:get', PackageUtil.getPackageAndFormat, PackageUtil);
    eventbus.on('typhonjs:util:package:path:get', PackageUtil.getPackagePath, PackageUtil);

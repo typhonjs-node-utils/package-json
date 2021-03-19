@@ -10,15 +10,12 @@ import getPackagePath   from './getPackagePath.js';
  *
  * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not provided.
  *
- * @returns {object|null} Loaded package.json or null if basePath or root directory has been reached.
+ * @returns {object|undefined} Loaded `package.json` or undefined if an error has occurred or basePath or root
+ *                             directory has been reached.
  */
-function getPackage(filePath, basePath = void 0)
+export default function getPackage(filePath, basePath = void 0)
 {
    const result = getPackagePath(filePath, basePath);
 
-   return result !== null ? result.packageObj : null;
+   return typeof result.packageObj === 'object' ? result.packageObj : void 0;
 }
-
-getPackage.clearCache = () => getPackagePath.clearCache();
-
-export default getPackage;

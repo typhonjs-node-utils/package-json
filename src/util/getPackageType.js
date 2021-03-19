@@ -16,13 +16,11 @@ import getPackagePath   from './getPackagePath.js';
  *
  * @returns {string} Type of package - 'module' for ESM otherwise 'commonjs'.
  */
-function getPackageType(filePath, basePath = void 0)
+export default function getPackageType(filePath, basePath = void 0)
 {
    const result = getPackagePath(filePath, basePath);
 
-   return result !== null ? result.packageObj.type === 'module' ? 'module' : 'commonjs' : 'commonjs';
+   return typeof result.packageObj === 'object' ?
+    result.packageObj.type === 'module' ? 'module' : 'commonjs' :
+     'commonjs';
 }
-
-getPackageType.clearCache = () => getPackagePath.clearCache();
-
-export default getPackageType;

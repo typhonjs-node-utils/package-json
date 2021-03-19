@@ -30,8 +30,6 @@ const checks = {
  */
 describe(`getPackageType - API error / bad data`, () =>
 {
-   before(() => { getPackageType.clearCache(); });
-
    it(`bad-data (boolean)`, () =>
    {
       const result = getPackageType(false);
@@ -43,38 +41,6 @@ describe(`getPackageType - API error / bad data`, () =>
  * Test all checks defined above.
  */
 describe(`getPackageType (all checks)`, () =>
-{
-   for (const directory of Object.keys(checks))
-   {
-      describe(`getPackageType (${directory})`, () =>
-      {
-         for (const [filePath, type] of Object.entries(checks[directory]))
-         {
-            it(`${filePath} -> ${type}`, () =>
-            {
-               assert.strictEqual(getPackageType(filePath), type);
-            });
-         }
-      });
-   }
-});
-
-/**
- * Test from cache
- */
-describe(`getPackageType - API error / bad data (from cache)`, () =>
-{
-   it(`bad-data (boolean)`, () =>
-   {
-      const result = getPackageType(false);
-      assert.strictEqual(result, 'commonjs');
-   });
-});
-
-/**
- * Test all checks defined above from cache.
- */
-describe(`getPackageType (all checks from cache)`, () =>
 {
    for (const directory of Object.keys(checks))
    {
