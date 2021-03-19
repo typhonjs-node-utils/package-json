@@ -17,9 +17,9 @@ describe(`getPackage`, () =>
       assert.strictEqual(result, null);
    });
 
-   it(`bad-path (string)`, () =>
+   it(`bad-path (string has null)`, () =>
    {
-      const result = getPackage('SJ}::|?////\\');
+      const result = getPackage('SJ}::|?/\0///\\');
       assert.strictEqual(result, null);
    });
 
@@ -123,7 +123,7 @@ describe(`getPackage (from cache)`, () =>
 
    it(`bad-path (string)`, () =>
    {
-      const result = getPackage('SJ}::|?////\\');
+      const result = getPackage('SJ}::|?/\0///\\');
       assert.strictEqual(result, null);
    });
 
