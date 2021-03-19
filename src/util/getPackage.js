@@ -16,7 +16,7 @@ function getPackage(filePath, basePath = void 0)
 {
    const result = getPackagePath(filePath, basePath);
 
-   return result !== null ? result.package : null;
+   return result !== null ? result.packageObj : null;
 }
 
 getPackage.clearCache = () => getPackagePath.clearCache();

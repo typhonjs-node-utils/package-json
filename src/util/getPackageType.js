@@ -20,7 +20,7 @@ function getPackageType(filePath, basePath = void 0)
 {
    const result = getPackagePath(filePath, basePath);
 
-   return result !== null ? result.package.type === 'module' ? 'module' : 'commonjs' : 'commonjs';
+   return result !== null ? result.packageObj.type === 'module' ? 'module' : 'commonjs' : 'commonjs';
 }
 
 getPackageType.clearCache = () => getPackagePath.clearCache();

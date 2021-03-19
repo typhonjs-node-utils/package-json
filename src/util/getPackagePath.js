@@ -24,8 +24,8 @@ function getDirectoryActual(directory, basePath, rootPath)
       try
       {
          return {
-            'package': JSON.parse(fs.readFileSync(packagePath, 'utf-8')),
-            'path': packagePath
+            packageObj: JSON.parse(fs.readFileSync(packagePath, 'utf-8')),
+            path: packagePath
          };
       }
       catch (_)
