@@ -26,26 +26,6 @@ const checks = {
 };
 
 /**
- * Test bad data input.
- */
-describe(`getPackageType - API error / bad data`, () =>
-{
-   it(`bad-data (boolean)`, () =>
-   {
-      const result = getPackageType(false);
-
-      assert.strictEqual(result, 'commonjs');
-   });
-
-   it(`bad-data (boolean)`, () =>
-   {
-      const result = getPackageType({ filepath: false });
-
-      assert.strictEqual(result, 'commonjs');
-   });
-});
-
-/**
  * Test all checks defined above.
  */
 describe(`getPackageType (all checks)`, () =>

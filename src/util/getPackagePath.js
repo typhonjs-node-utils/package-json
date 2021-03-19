@@ -43,12 +43,17 @@ export default function getPackagePath({ filepath, basepath = void 0, callback }
 {
    if (typeof filepath !== 'string' && !(filepath instanceof URL))
    {
-      return { error: new TypeError(`'filepath' is not a 'string' or file 'URL'.`) };
+      return { error: new TypeError(`'filepath' is not a 'string' or file 'URL'`) };
    }
 
    if (basepath !== void 0 && typeof basepath !== 'string' && !(basepath instanceof URL))
    {
-      return { error: new TypeError(`'basepath' is not a 'string' or file 'URL'.`) };
+      return { error: new TypeError(`'basepath' is not a 'string' or file 'URL'`) };
+   }
+
+   if (callback !== void 0 && typeof callback !== 'function')
+   {
+      return { error: new TypeError(`'callback' is not a 'function'`) };
    }
 
    /**

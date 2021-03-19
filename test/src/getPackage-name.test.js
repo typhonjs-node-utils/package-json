@@ -9,36 +9,6 @@ import { getPackage }   from '../../src/index.js';
  */
 describe(`getPackage`, () =>
 {
-   it(`void 0`, () =>
-   {
-      const result = getPackage({ filepath: void 0 });
-      assert.strictEqual(result, void 0);
-   });
-
-   it(`bad-data (boolean)`, () =>
-   {
-      const result = getPackage(false);
-      assert.strictEqual(result, void 0);
-   });
-
-   it(`bad-path (string has null)`, () =>
-   {
-      const result = getPackage('SJ}::|?/\0///\\');
-      assert.strictEqual(result, void 0);
-   });
-
-   it(`bad-data (boolean)`, () =>
-   {
-      const result = getPackage({ filepath: false });
-      assert.strictEqual(result, void 0);
-   });
-
-   it(`bad-path (string has null)`, () =>
-   {
-      const result = getPackage({ filepath: 'SJ}::|?/\0///\\' });
-      assert.strictEqual(result, void 0);
-   });
-
    it(`malformed-package`, () =>
    {
       const result = getPackage({ filepath: './test/fixtures/packages/name/malformed-package-json/test.js' });
