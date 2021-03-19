@@ -28,9 +28,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install c8 globally
-        run: npm install c8 -g
-
       - name: Install esm
         run: npm install esm
 
@@ -38,7 +35,7 @@ jobs:
         run: npm run eslint
 
       - name: Run the tests
-        run: c8 --experimental-modules --reporter=text-summary mocha -colors "test/src/**/*.test.js" --require esm
+        run: npm run test --experimental-modules --require esm
 
   build-node:
     strategy:
