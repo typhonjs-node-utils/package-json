@@ -35,7 +35,7 @@ jobs:
         run: npm run eslint
 
       - name: Run the tests
-        run: npm run test --experimental-modules -- "--require esm"
+        run: npm run test --experimental-modules -- --require esm
 
   build-node:
     strategy:
