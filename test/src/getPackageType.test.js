@@ -33,6 +33,14 @@ describe(`getPackageType - API error / bad data`, () =>
    it(`bad-data (boolean)`, () =>
    {
       const result = getPackageType(false);
+
+      assert.strictEqual(result, 'commonjs');
+   });
+
+   it(`bad-data (boolean)`, () =>
+   {
+      const result = getPackageType({ filepath: false });
+
       assert.strictEqual(result, 'commonjs');
    });
 });
@@ -46,11 +54,11 @@ describe(`getPackageType (all checks)`, () =>
    {
       describe(`getPackageType (${directory})`, () =>
       {
-         for (const [filePath, type] of Object.entries(checks[directory]))
+         for (const [filepath, type] of Object.entries(checks[directory]))
          {
-            it(`${filePath} -> ${type}`, () =>
+            it(`${filepath} -> ${type}`, () =>
             {
-               assert.strictEqual(getPackageType(filePath), type);
+               assert.strictEqual(getPackageType({ filepath }), type);
             });
          }
       });

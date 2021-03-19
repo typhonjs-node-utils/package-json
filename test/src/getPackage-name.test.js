@@ -9,6 +9,12 @@ import { getPackage }   from '../../src/index.js';
  */
 describe(`getPackage`, () =>
 {
+   it(`void 0`, () =>
+   {
+      const result = getPackage({ filepath: void 0 });
+      assert.strictEqual(result, void 0);
+   });
+
    it(`bad-data (boolean)`, () =>
    {
       const result = getPackage(false);
@@ -21,89 +27,96 @@ describe(`getPackage`, () =>
       assert.strictEqual(result, void 0);
    });
 
+   it(`bad-data (boolean)`, () =>
+   {
+      const result = getPackage({ filepath: false });
+      assert.strictEqual(result, void 0);
+   });
+
+   it(`bad-path (string has null)`, () =>
+   {
+      const result = getPackage({ filepath: 'SJ}::|?/\0///\\' });
+      assert.strictEqual(result, void 0);
+   });
+
    it(`malformed-package`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/malformed-package-json/test.js');
+      const result = getPackage({ filepath: './test/fixtures/packages/name/malformed-package-json/test.js' });
       assert.strictEqual(result, void 0);
    });
 
    it(`malformed-package (directory)`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/malformed-package-json');
+      const result = getPackage({ filepath: './test/fixtures/packages/name/malformed-package-json' });
       assert.strictEqual(result, void 0);
    });
 
    it(`name-good`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/name-good/test.js');
+      const result = getPackage({ filepath: './test/fixtures/packages/name/name-good/test.js' });
       assert.strictEqual(result.name, 'good');
    });
 
    it(`name-good (directory)`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/name-good');
+      const result = getPackage({ filepath: './test/fixtures/packages/name/name-good' });
       assert.strictEqual(result.name, 'good');
    });
 
    it(`name-missing`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/name-missing/test.js');
+      const result = getPackage({ filepath: './test/fixtures/packages/name/name-missing/test.js' });
       assert.deepEqual(result, {});
    });
 
    it(`name-missing (directory)`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/name-missing/');
+      const result = getPackage({ filepath: './test/fixtures/packages/name/name-missing/' });
       assert.deepEqual(result, {});
    });
 
    it(`name-parent->child->missing`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/name-parent/name-child/no-package-json/test.js');
+      const result = getPackage(
+       { filepath: './test/fixtures/packages/name/name-parent/name-child/no-package-json/test.js' });
       assert.strictEqual(result.name, 'child');
    });
 
    it(`name-parent->child->missing (directory)`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/name-parent/name-child/no-package-json');
+      const result = getPackage({ filepath: './test/fixtures/packages/name/name-parent/name-child/no-package-json' });
       assert.strictEqual(result.name, 'child');
    });
 
    it(`no-package-json`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/no-package-json/test.js');
+      const result = getPackage({ filepath: './test/fixtures/packages/name/no-package-json/test.js' });
       assert.strictEqual(result.name, 'base');
    });
 
-   it(`no-package-json w/ basePath`, () =>
+   it(`no-package-json w/ basepath`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/no-package-json/test.js',
-       './test/fixtures/packages/name/no-package-json/');
+      const result = getPackage({ filepath: './test/fixtures/packages/name/no-package-json/test.js',
+       basepath: './test/fixtures/packages/name/no-package-json/' });
       assert.strictEqual(result, void 0);
    });
 
-   it(`no-package-json (directory) w/ basePath`, () =>
+   it(`no-package-json (directory) w/ basepath`, () =>
    {
-      const result = getPackage('./test/fixtures/packages/name/no-package-json',
-       './test/fixtures/packages/name/no-package-json');
+      const result = getPackage({ filepath: './test/fixtures/packages/name/no-package-json',
+       basepath: './test/fixtures/packages/name/no-package-json' });
       assert.strictEqual(result, void 0);
    });
 
    it(`import.meta.url`, () =>
    {
-      const result = getPackage(import.meta.url);
+      const result = getPackage({ filepath: import.meta.url });
       assert.strictEqual(result.name, '@typhonjs-node-utils/package-util');
    });
 
    it(`Dummy near root`, () =>
    {
-      const result = getPackage(`${path.sep}dummy-dir${path.sep}dummy-file.js`);
-      assert.strictEqual(result, void 0);
-   });
-
-   it(`void 0`, () =>
-   {
-      const result = getPackage(void 0);
+      const result = getPackage({ filepath: `${path.sep}dummy-dir${path.sep}dummy-file.js` });
       assert.strictEqual(result, void 0);
    });
 });

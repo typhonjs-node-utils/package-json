@@ -32,22 +32,27 @@ import getPackageType   from '../util/getPackageType.js';
 export default class PackageUtil
 {
    /**
-    * Attempts to traverse from `filePath` to `basePath` attempting to load `package.json`.
+    * Attempts to traverse from `filepath` to `basepath` attempting to load `package.json`.
     *
     * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
     * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
     *
-    * @param {string|URL}   filePath - Initial file or directory path to search for `package.json`.
+    * @param {object}      options - An object.
     *
-    * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
-    *                                    provided.
+    * @param {string|URL}  options.filepath - Initial file or directory path to search for `package.json`.
     *
-    * @returns {object|undefined} Loaded `package.json` or undefined if an error has occurred or basePath or root
+    * @param {string|URL}  [options.basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
+    *                                           provided.
+    *
+    * @param {Function}    [options.callback] - A function that evaluates any loaded package.json object that passes
+    *                                           back a truthy value that stops or continues the traversal.
+    *
+    * @returns {object|undefined} Loaded `package.json` or undefined if an error has occurred or basepath or root
     *                             directory has been reached.
     */
-   static getPackage(filePath, basePath = void 0)
+   static getPackage(options)
    {
-      return getPackage(filePath, basePath);
+      return getPackage(options);
    }
 
    /**
@@ -56,38 +61,48 @@ export default class PackageUtil
     * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
     * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
     *
-    * @param {string|URL}   filePath - Initial file or directory path to search for `package.json`.
+    * @param {object}      options - An object.
     *
-    * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
-    *                                    provided.
+    * @param {string|URL}  options.filepath - Initial file or directory path to search for `package.json`.
+    *
+    * @param {string|URL}  [options.basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
+    *                                           provided.
+    *
+    * @param {Function}    [options.callback] - A function that evaluates any loaded package.json object that passes
+    *                                           back a truthy value that stops or continues the traversal.
     *
     * @returns {object} Formatted package.json or empty object if an error has occurred.
     */
-   static getPackageAndFormat(filePath, basePath = void 0)
+   static getPackageAndFormat(options)
    {
-      return PackageUtil.format(getPackage(filePath, basePath));
+      return PackageUtil.format(getPackage(options));
    }
 
    /**
-    * Attempts to traverse from `filePath` to `basePath` attempting to load `package.json` along with the package path.
+    * Attempts to traverse from `filepath` to `basepath` attempting to load `package.json` along with the package path.
     *
     * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
     * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
     *
-    * @param {string|URL}   filePath - Initial file or directory path to search for `package.json`.
+    * @param {object}      options - An object.
     *
-    * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
-    *                                    provided.
+    * @param {string|URL}  options.filepath - Initial file or directory path to search for `package.json`.
+    *
+    * @param {string|URL}  [options.basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
+    *                                           provided.
+    *
+    * @param {Function}    [options.callback] - A function that evaluates any loaded package.json object that passes
+    *                                           back a truthy value that stops or continues the traversal.
     *
     * @returns {PackageObjData} Loaded package.json / path or potentially an error.
     */
-   static getPackagePath(filePath, basePath = void 0)
+   static getPackagePath(options)
    {
-      return getPackagePath(filePath, basePath);
+      return getPackagePath(options);
    }
 
    /**
-    * Attempts to traverse from `filePath` to `basePath` attempting to access `type` field of `package.json`. The type
+    * Attempts to traverse from `filepath` to `basepath` attempting to access `type` field of `package.json`. The type
     * is returned if it is set in the found `package.json` otherwise `commonjs` is returned.
     *
     * Note: This only reliably returns a positive result. If provided with malformed data or there is any error / edge
@@ -96,16 +111,21 @@ export default class PackageUtil
     * Another edge case is that traversal stops at the first valid `package.json` file and this may not contain a `type`
     * property whereas a `package.json` file in the root of the module may define it.
     *
-    * @param {string|URL}   filePath - Initial file or directory path to search for `package.json`.
+    * @param {object}      options - An object.
     *
-    * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
-    *                                    provided.
+    * @param {string|URL}  options.filepath - Initial file or directory path to search for `package.json`.
+    *
+    * @param {string|URL}  [options.basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
+    *                                           provided.
+    *
+    * @param {Function}    [options.callback] - A function that evaluates any loaded package.json object that passes
+    *                                           back a truthy value that stops or continues the traversal.
     *
     * @returns {string} Type of package - 'module' for ESM otherwise 'commonjs'.
     */
-   static getPackageType(filePath, basePath = void 0)
+   static getPackageType(options)
    {
-      return getPackageType(filePath, basePath);
+      return getPackageType(options);
    }
 
    /**

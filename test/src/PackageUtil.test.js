@@ -8,7 +8,7 @@ describe('PackageUtil:', () =>
 {
    it('getPackage / format:', () =>
    {
-      const packageObj = PackageUtil.getPackage(import.meta.url);
+      const packageObj = PackageUtil.getPackage({ filepath: import.meta.url });
       const data = PackageUtil.format(packageObj);
 
       assert.strictEqual(JSON.stringify(data), s_VERIFY_DATA(data.version));
@@ -16,7 +16,7 @@ describe('PackageUtil:', () =>
 
    it('getPackageAndFormat:', () =>
    {
-      const data = PackageUtil.getPackageAndFormat(import.meta.url);
+      const data = PackageUtil.getPackageAndFormat({ filepath: import.meta.url });
       assert.strictEqual(JSON.stringify(data), s_VERIFY_DATA(data.version));
    });
 });
