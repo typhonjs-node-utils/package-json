@@ -22,7 +22,7 @@ const checks = {
    ...pathInfo('./test/fixtures/packages/type/type-module', 'module'),
    ...pathInfo('./test/fixtures/packages/type/type-module/subdir', 'commonjs'),
    ...pathInfo('', 'commonjs'),
-   ...pathInfo('SJ}::|?////\\', 'commonjs')
+   ...pathInfo('SJ}::|?/\0///\\', 'commonjs')
 };
 
 /**
