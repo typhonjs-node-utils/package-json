@@ -77,7 +77,7 @@ export default function getPackagePath(filePath, basePath = void 0)
          return { error: new Error(`Could not resolve 'filePath' or 'basePath'`) };
       }
 
-      // Ensure we track the root of the resolved file path to stop recursion.
+      // Ensure we track the root of the current directory path to stop iteration.
       const rootPath = path.parse(currentDirectory).root;
 
       // Below is an iterative loop that stops at any base directory provided or the root directory of the provided
