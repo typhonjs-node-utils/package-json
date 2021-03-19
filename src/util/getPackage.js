@@ -1,94 +1,24 @@
-import fs   from 'fs';
-import path from 'path';
-import url  from 'url';
-
-const resultsCache = new Map();
-
-/**
- * Attempt to load `package.json` at `directory`.
- *
- * @param {string}   directory - Current directory to find `package.json`.
- *
- * @param {string}   basePath - Base path to stop traversing.
- *
- * @param {string}   rootDir - Absolute stopping point at root directory.
- *
- * @returns {object|null} Loaded directory or null if basePath has been reached. Recursive call.
- */
-function getDirectoryActual(directory, basePath, rootDir)
-{
-   try
-   {
-      const packagePath = path.resolve(directory, 'package.json');
-
-      if (fs.existsSync(packagePath))
-      {
-         return JSON.parse(fs.readFileSync(packagePath, 'utf-8'));
-      }
-   }
-   catch (_) { /**/ }
-
-   if (directory === basePath || directory === rootDir) { return null; }
-
-   const parent = path.dirname(directory);
-
-   return getDirectory(parent, basePath, rootDir);
-}
-
-/**
- * Attempt to load from cache or invoke `getDirectoryActual`.
- *
- * @param {string}   directory - Current directory to find `package.json`.
- *
- * @param {string}   basePath - Base path to stop traversing.
- *
- * @param {string}   rootDir - Absolute stopping point at root directory.
- *
- * @returns {object|null} Loaded package.json or null.
- */
-function getDirectory(directory, basePath, rootDir)
-{
-   const key = `${directory}:${basePath}`;
-
-   if (resultsCache.has(key)) { return resultsCache.get(key); }
-
-   const result = getDirectoryActual(directory, basePath, rootDir);
-
-   resultsCache.set(key, result);
-
-   return result;
-}
+import getPackagePath   from './getPackagePath.js';
 
 /**
  * Attempts to traverse from `filePath` to `basePath` attempting to load `package.json`.
  *
- * @param {string}   filePath - Initial file or directory path to search for `package.json`.
+ * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
+ * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
  *
- * @param {string}   basePath - Base path to stop traversing.
+ * @param {string|URL}   filePath - Initial file or directory path to search for `package.json`.
  *
- * @returns {object|null} Loaded package.json or null.
+ * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not provided.
+ *
+ * @returns {object|null} Loaded package.json or null if basePath or root directory has been reached.
  */
-export default function getPackage(filePath, basePath = process.cwd())
+function getPackage(filePath, basePath = void 0)
 {
-   // Convert file URL to path
-   if (filePath.startsWith('file:/'))
-   {
-      filePath = url.fileURLToPath(filePath);
-   }
+   const result = getPackagePath(filePath, basePath);
 
-   // Convert file URL to path
-   if (basePath.startsWith('file:/'))
-   {
-      basePath = url.fileURLToPath(basePath);
-   }
-
-   const resolvedFilePath = fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory() ? path.resolve(filePath) :
-    path.resolve(path.dirname(filePath));
-
-   const resolvedBasePath = fs.existsSync(basePath) && fs.lstatSync(basePath).isDirectory() ? path.resolve(basePath) :
-    path.resolve(path.dirname(basePath));
-
-   const rootDir = path.parse(resolvedFilePath).root;
-
-   return getDirectory(resolvedFilePath, resolvedBasePath, rootDir);
+   return result !== null ? result.package : null;
 }
+
+getPackage.clearCache = () => getPackagePath.clearCache();
+
+export default getPackage;

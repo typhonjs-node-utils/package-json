@@ -10,7 +10,8 @@
     ".": "./src/index.js",
     "./PackageUtil": "./src/plugin/PackageUtil.js",
     "./getPackage": "./src/util/getPackage.js",
-    "./getPackagePath": "./src/util/getPackagePath.js"
+    "./getPackagePath": "./src/util/getPackagePath.js",
+    "./getPackageType": "./src/util/getPackageType.js"
   },
   "maintainers": [
     {
@@ -28,8 +29,7 @@
     "mocha": "^8.0.0"
   },
   "engines": {
-    "node": ">=14.0.0",
-    "npm": ">=7.0.0"
+    "node": ">=12.0.0"
   },
   "files": [
     "/npm-shrinkwrap.json",

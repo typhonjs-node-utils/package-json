@@ -1,5 +1,6 @@
 import getPackage       from '../util/getPackage.js';
 import getPackagePath   from '../util/getPackagePath.js';
+import getPackageType   from '../util/getPackageType.js';
 
 /**
  * @typedef {object} NPMPackageData
@@ -12,14 +13,9 @@ import getPackagePath   from '../util/getPackagePath.js';
  * @property {string}   homepage -
  * @property {string}   license -
  * @property {string}   main -
- * @property {object}   repository -
- * @property {object}   bugs -
+ * @property {{type: string, url: string}}   repository -
+ * @property {{url: string}}   bugs -
  * @property {string}   formattedMessage -
- */
-
-/**
- * @typedef {object} NPMPackageObject
- * @see https://docs.npmjs.com/files/package.json
  */
 
 /**
@@ -27,20 +23,92 @@ import getPackagePath   from '../util/getPackagePath.js';
  */
 export default class PackageUtil
 {
-   static getPackage(filePath, basePath)
+   /**
+    * Clears the "getPackage" cache.
+    */
+   static clearCache() { getPackagePath.clearCache(); }
+
+   /**
+    * Attempts to traverse from `filePath` to `basePath` attempting to load `package.json`.
+    *
+    * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
+    * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
+    *
+    * @param {string|URL}   filePath - Initial file or directory path to search for `package.json`.
+    *
+    * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
+    *                                    provided.
+    *
+    * @returns {object|null} Loaded package.json or null if basePath or root directory has been reached.
+    */
+   static getPackage(filePath, basePath = void 0)
    {
       return getPackage(filePath, basePath);
    }
 
-   static getPackagePath(filePath, basePath)
+   /**
+    * Attempts to find the nearest package.json via `getPackage` then passes the results to `PackageUtil.format`.
+    *
+    * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
+    * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
+    *
+    * @param {string|URL}   filePath - Initial file or directory path to search for `package.json`.
+    *
+    * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
+    *                                    provided.
+    *
+    * @returns {object} Formatted package.json or empty if an error has occurred.
+    */
+   static getPackageAndFormat(filePath, basePath = void 0)
+   {
+      return PackageUtil.format(getPackage(filePath, basePath));
+   }
+
+   /**
+    * Attempts to traverse from `filePath` to `basePath` attempting to load `package.json` along with the package path.
+    *
+    * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
+    * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
+    *
+    * @param {string|URL}   filePath - Initial file or directory path to search for `package.json`.
+    *
+    * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
+    *                                    provided.
+    *
+    * @returns {{package: object, path: string}|null} Loaded package.json and path or null if basePath or root
+    * directory has been reached.
+    */
+   static getPackagePath(filePath, basePath = void 0)
    {
       return getPackagePath(filePath, basePath);
    }
 
    /**
+    * Attempts to traverse from `filePath` to `basePath` attempting to access `type` field of `package.json`. The type
+    * is returned if it is set in the found `package.json` otherwise `commonjs` is returned.
+    *
+    * Note: This only reliably returns a positive result. If provided with malformed data or there is any error / edge
+    * case triggered then 'commonjs' by default will be returned.
+    *
+    * Another edge case is that traversal stops at the first valid `package.json` file and this may not contain a `type`
+    * property whereas a `package.json` file in the root of the module may define it.
+    *
+    * @param {string|URL}   filePath - Initial file or directory path to search for `package.json`.
+    *
+    * @param {string|URL}   [basePath] - Base path to stop traversing. Set to the root path of `filePath` if not
+    *                                    provided.
+    *
+    * @returns {string} Type of package - 'module' for ESM otherwise 'commonjs'.
+    */
+   static getPackageType(filePath, basePath = void 0)
+   {
+      return getPackageType(filePath, basePath);
+   }
+
+   /**
     * Get essential info for the given package object consistently formatted.
     *
-    * @param {NPMPackageObject} packageObj - A loaded `package.json` object.
+    * @param {object} packageObj - A loaded `package.json` object.
     *
     * @returns {NPMPackageData} The formatted package object.
     */
@@ -49,7 +117,7 @@ export default class PackageUtil
       let bugsURL, repoURL, scmType;
 
       // Sanity case to create empty object.
-      if (packageObj === null || typeof packageObj === 'undefined')
+      if (typeof packageObj !== 'object')
       {
          packageObj = {};
       }
@@ -115,8 +183,11 @@ export function onPluginLoad(ev)
 {
    const eventbus = ev.eventbus;
 
+   eventbus.on('typhonjs:util:package:cache:clear', PackageUtil.clearCache, PackageUtil);
    eventbus.on('typhonjs:util:package:get', PackageUtil.getPackage, PackageUtil);
+   eventbus.on('typhonjs:util:package:object:format:get', PackageUtil.getPackageAndFormat, PackageUtil);
    eventbus.on('typhonjs:util:package:path:get', PackageUtil.getPackagePath, PackageUtil);
+   eventbus.on('typhonjs:util:package:type:get', PackageUtil.getPackageType, PackageUtil);
    eventbus.on('typhonjs:util:package:object:format', PackageUtil.format, PackageUtil);
 }
 
@@ -136,9 +207,14 @@ const s_PARSE_URL = (parseURL) =>
 
    if (typeof parseURL === 'string')
    {
+      // Attempt to resolve public Github URL.
       url = s_PARSE_URL_GITHUB(parseURL);
 
+      // Attempt to resolve public Gitlab URL.
       if (url === null) { url = s_PARSE_URL_GITLAB(parseURL); }
+
+      // Didn't resolve a public github or gitlab URL so set to original.
+      if (url === null) { url = parseURL; }
    }
 
    return url === null ? '' : url;
@@ -219,7 +295,7 @@ const s_PARSE_URL_GITLAB = (parseURL) =>
 };
 
 /**
- * Parses an URL to determine SCM type; Github / Gitlab supported.
+ * Parses an URL to determine SCM type; public Github / Gitlab supported.
  *
  * @param {string}   scmURL - URL to parse.
  *
@@ -228,7 +304,7 @@ const s_PARSE_URL_GITLAB = (parseURL) =>
  */
 const s_PARSE_URL_SCM_TYPE = (scmURL) =>
 {
-   let scmType;
+   let scmType = 'unknown';
 
    if (scmURL.match(new RegExp('^https?://github.com/')))
    {
