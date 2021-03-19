@@ -49,6 +49,6 @@
     "posttest": "npm run eslint",
     "prepublishOnly": "npm run eslint && npm run test",
     "test": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/**/*.test.js\"",
-    "test-n12": "c8 --experimental-modules --reporter=lcov --reporter=text-summary mocha -colors \"test/src/**/*.test.js\""
+    "test-n12": "c8 --experimental-modules --reporter=lcov --reporter=text-summary mocha -colors \"test/src/**/*.test.js\" --require esm"
   }
 }
