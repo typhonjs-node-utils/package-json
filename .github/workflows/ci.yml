@@ -35,7 +35,7 @@ jobs:
         run: npm run eslint
 
       - name: Run the tests
-        run: c8 --experimental-modules mocha -colors "test/src/**/*.test.js" --require esm
+        run: node --experimental-modules node_modules/c8/bin/c8.js --reporter=text-summary mocha -colors "test/src/**/*.test.js" --require esm
 
   build-node:
     strategy:
