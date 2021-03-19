@@ -72,10 +72,10 @@ export default function getPackagePath(options)
             }
          }
 
-         // If the current directory equals the base directory then stop the traversal.
+         // If the current directory equals the base directory then stop traversal.
          if (data.currentDirectory === data.baseDirectory) { break; }
 
-      // If the current directory equals the root path then stop the traversal.
+      // If the current directory equals the root path then stop traversal.
       } while ((data.currentDirectory = path.dirname(data.currentDirectory)) !== data.rootPath);
    }
    catch (error)

@@ -61,8 +61,8 @@ export default class TraversalData
    }
 
    /**
-    * Determines if basedir was set and if it is then compares the starting directory against the base directory to
-    * determine if the base directory is a parent directory and when stop traversal.
+    * Returns true if basedir has been set comparing the starting directory against the base directory to
+    * determine if the base directory is a parent path intentionally stopping traversal.
     *
     * @returns {boolean} Whether basedir is set and a parent of the starting directory.
     */
