@@ -32,7 +32,7 @@ jobs:
         run: npm run eslint
 
       - name: Run the tests
-        run: npm test --experimental-modules
+        run: npm --experimental-modules test
 
   build-node:
     strategy:
