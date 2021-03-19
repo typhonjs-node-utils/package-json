@@ -59,7 +59,7 @@ jobs:
         run: npm run eslint
 
       - name: Run the tests
-        run: npm test --experimental-modules
+        run: npm test
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
