@@ -177,7 +177,7 @@ export default class PackageUtil
 /**
  * Creates several general utility methods bound to the eventbus.
  *
- * @param {PluginEvent}    ev - An event proxy for the main eventbus.
+ * @param {object}    ev - PluginEvent with an event proxy for the main eventbus.
  */
 export function onPluginLoad(ev)
 {
