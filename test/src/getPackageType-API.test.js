@@ -2,22 +2,36 @@ import { assert }          from 'chai';
 
 import { getPackageType }  from '../../src/index.js';
 
-/**
- * Test bad data input.
- */
-describe(`getPackageType - API error / bad data`, () =>
+import test                from '../util/test.js';
+
+if (test.categories.getPackageType_API)
 {
-   it(`bad-data (boolean)`, () =>
+   /**
+    * Test bad data input.
+    */
+   describe(`getPackageType - API error / bad data`, () =>
    {
-      const result = getPackageType(false);
+      it(`test `, () =>
+      {
+         const result = getPackageType({
+            filepath: './test/fixtures/packages/type/type-module/subdir/'
+         });
 
-      assert.strictEqual(result, 'commonjs');
+         assert.strictEqual(result, 'commonjs');
+      });
+
+      it(`bad-data (boolean)`, () =>
+      {
+         const result = getPackageType(false);
+
+         assert.strictEqual(result, 'commonjs');
+      });
+
+      it(`bad-data (boolean)`, () =>
+      {
+         const result = getPackageType({ filepath: false });
+
+         assert.strictEqual(result, 'commonjs');
+      });
    });
-
-   it(`bad-data (boolean)`, () =>
-   {
-      const result = getPackageType({ filepath: false });
-
-      assert.strictEqual(result, 'commonjs');
-   });
-});
+}

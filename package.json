@@ -9,6 +9,7 @@
   "exports": {
     ".": "./src/index.js",
     "./PackageUtil": "./src/plugin/PackageUtil.js",
+    "./formatPackage": "./src/util/formatPackage.js",
     "./getPackage": "./src/util/getPackage.js",
     "./getPackagePath": "./src/util/getPackagePath.js",
     "./getPackageType": "./src/util/getPackageType.js"

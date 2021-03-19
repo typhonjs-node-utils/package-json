@@ -2,6 +2,8 @@ import { assert }          from 'chai';
 
 import { getPackageType }  from '../../src/index.js';
 
+import test                from '../util/test.js';
+
 const pathInfo = (directory, type) => ({
    [`${directory}`]: {
       [`${directory}/file.js`]: type,
@@ -25,22 +27,25 @@ const checks = {
    ...pathInfo('SJ}::|?/\0///\\', 'commonjs')
 };
 
-/**
- * Test all checks defined above.
- */
-describe(`getPackageType (all checks)`, () =>
+if (test.categories.getPackageType)
 {
-   for (const directory of Object.keys(checks))
+   /**
+    * Test all checks defined above.
+    */
+   describe(`getPackageType (all checks)`, () =>
    {
-      describe(`getPackageType (${directory})`, () =>
+      for (const directory of Object.keys(checks))
       {
-         for (const [filepath, type] of Object.entries(checks[directory]))
+         describe(`getPackageType (${directory})`, () =>
          {
-            it(`${filepath} -> ${type}`, () =>
+            for (const [filepath, type] of Object.entries(checks[directory]))
             {
-               assert.strictEqual(getPackageType({ filepath }), type);
-            });
-         }
-      });
-   }
-});
+               it(`${filepath} -> ${type}`, () =>
+               {
+                  assert.strictEqual(getPackageType({ filepath }), type);
+               });
+            }
+         });
+      }
+   });
+}

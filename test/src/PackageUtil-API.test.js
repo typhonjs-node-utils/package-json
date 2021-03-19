@@ -1,5 +1,9 @@
-// TODO: Create negative API tests
+import test             from '../util/test.js';
 
-describe('PackageUtil API tests', () =>
+if (test.categories.PackageUtil_API)
 {
-});
+   // TODO: Create negative API tests
+   describe('PackageUtil API tests', () =>
+   {
+   });
+}
