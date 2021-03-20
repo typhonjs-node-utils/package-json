@@ -35,7 +35,7 @@ export default class PackageUtil
    /**
     * Attempts to traverse from `filepath` to `basepath` attempting to load `package.json`.
     *
-    * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
+    * Note: If malformed data is presented the result will undefined. Also note that a file may be specified that
     * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
     *
     * @param {object}      options - An object.
@@ -59,7 +59,7 @@ export default class PackageUtil
    /**
     * Attempts to find the nearest package.json via `getPackage` then passes the results to `PackageUtil.format`.
     *
-    * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
+    * Note: If malformed data is presented the result will undefined. Also note that a file may be specified that
     * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
     *
     * @param {object}      options - An object.
@@ -82,8 +82,9 @@ export default class PackageUtil
    /**
     * Attempts to traverse from `filepath` to `basepath` attempting to load `package.json` along with the package path.
     *
-    * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
-    * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
+    * Note: If malformed data is presented the result will undefined along with a possible error included in the
+    * returned object / `PackageObjData`. Also note that a file may be specified that does not exist and the
+    * directory will be resolved. If that directory exists then resolution will continue.
     *
     * @param {object}      options - An object.
     *
@@ -115,7 +116,7 @@ export default class PackageUtil
     *
     * However if you provide a `filepath` and a `basepath` that is a parent path giving a firm stopping point then a
     * proper resolution callback, `s_RESOLVE_TYPE`, is automatically added. Intermediary `package.json` files that
-    * don't have an explicit `type` attribute set do not prevent traversal which continues until the basepath is
+    * do not have an explicit `type` attribute set do not prevent traversal which continues until the `basepath` is
     * reached which is how Node.js actually resolves the `type` attribute.
     *
     * @param {object}      options - An object.

@@ -14,7 +14,7 @@ import TraversalData  from './TraversalData.js';
  *
  * However if you provide a `filepath` and a `basepath` that is a parent path giving a firm stopping point then a
  * proper resolution callback, `s_RESOLVE_TYPE`, is automatically added. Intermediary `package.json` files that
- * don't have an explicit `type` attribute set do not prevent traversal which continues until the basepath is
+ * do not have an explicit `type` attribute set do not prevent traversal which continues until the `basepath` is
  * reached which is how Node.js actually resolves the `type` attribute.
  *
  * @param {object}      options - An object.
@@ -55,7 +55,7 @@ export default function getPackageType(options)
 
 /**
  * Handles proper resolution of finding the parent `package.json` that has a type attribute set. You must set
- * `basedir` to provide a known stopping point.
+ * `basepath` to provide a known stopping point.
  *
  * @param {TraversalData}  data - Current traversal state.
  *

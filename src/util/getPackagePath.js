@@ -14,8 +14,9 @@ import TraversalData from './TraversalData.js';
 /**
  * Attempts to traverse from `filepath` to `basepath` attempting to load `package.json` along with the package path.
  *
- * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
- * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
+ * Note: If malformed data is presented the result will undefined along with a possible error included in the returned
+ * object / `PackageObjData`. Also note that a file may be specified that does not exist and the directory will be
+ * resolved. If that directory exists then resolution will continue.
  *
  * @param {object}      options - An object.
  *
@@ -31,11 +32,13 @@ import TraversalData from './TraversalData.js';
  */
 export default function getPackagePath(options)
 {
-   const data = options instanceof TraversalData ? options : new TraversalData();
+   const isTraversalData = options instanceof TraversalData;
+
+   const data = isTraversalData ? options : new TraversalData();
 
    try
    {
-      if (!(options instanceof TraversalData))
+      if (!isTraversalData)
       {
          TraversalData.parse(data, options);
       }

@@ -3,7 +3,7 @@ import getPackagePath   from './getPackagePath.js';
 /**
  * Attempts to traverse from `filepath` to `basepath` attempting to load `package.json`.
  *
- * Note: If malformed data is presented the result will be silently null. Also note that a file may be specified that
+ * Note: If malformed data is presented the result will undefined. Also note that a file may be specified that
  * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
  *
  * @param {object}      options - An object.
