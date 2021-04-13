@@ -1,5 +1,5 @@
 {
-  "name": "@typhonjs-node-utils/package-util",
+  "name": "@typhonjs-utils/package.json",
   "description": "Provides several utility methods for working with `package.json`.",
   "version": "0.0.9",
   "author": "typhonrt",
@@ -8,7 +8,7 @@
   "module": "src/index.js",
   "exports": {
     ".": "./src/index.js",
-    "./PackageUtil": "./src/plugin/PackageUtil.js",
+    "./plugin": "./src/plugin/PackageUtil.js",
     "./formatPackage": "./src/util/formatPackage.js",
     "./getPackage": "./src/util/getPackage.js",
     "./getPackagePath": "./src/util/getPackagePath.js",
@@ -22,7 +22,7 @@
     }
   ],
   "devDependencies": {
-    "@typhonjs-node-utils/build-test": "^0.1.0"
+    "@typhonjs-utils/build-test": "^0.1.0"
   },
   "engines": {
     "node": ">=12.0.0"
@@ -31,15 +31,15 @@
     "/npm-shrinkwrap.json",
     "/src"
   ],
-  "homepage": "https://github.com/typhonjs-node-utils/package-util",
+  "homepage": "https://github.com/typhonjs-node-utils/package.json",
   "keywords": [
     "typhonjs",
-    "package",
-    "util"
+    "utils",
+    "package.json"
   ],
   "license": "MPL-2.0",
-  "bugs": "https://github.com/typhonjs-node-utils/package-util/issues",
-  "repository": "typhonjs-node-utils/package-util",
+  "bugs": "https://github.com/typhonjs-node-utils/package.json/issues",
+  "repository": "typhonjs-node-utils/package.json",
   "scripts": {
     "eslint": "eslint .",
     "posttest": "npm run eslint",

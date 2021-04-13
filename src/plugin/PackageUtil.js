@@ -158,9 +158,9 @@ export function onPluginLoad(ev)
 {
    const eventbus = ev.eventbus;
 
-   eventbus.on('typhonjs:util:package:get', PackageUtil.getPackage, PackageUtil);
-   eventbus.on('typhonjs:util:package:object:format:get', PackageUtil.getPackageAndFormat, PackageUtil);
-   eventbus.on('typhonjs:util:package:path:get', PackageUtil.getPackagePath, PackageUtil);
-   eventbus.on('typhonjs:util:package:type:get', PackageUtil.getPackageType, PackageUtil);
-   eventbus.on('typhonjs:util:package:object:format', PackageUtil.format, PackageUtil);
+   eventbus.on('typhonjs:utils:package.json:get', PackageUtil.getPackage, PackageUtil);
+   eventbus.on('typhonjs:utils:package.json:object:format:get', PackageUtil.getPackageAndFormat, PackageUtil);
+   eventbus.on('typhonjs:utils:package.json:path:get', PackageUtil.getPackagePath, PackageUtil);
+   eventbus.on('typhonjs:utils:package.json:type:get', PackageUtil.getPackageType, PackageUtil);
+   eventbus.on('typhonjs:utils:package.json:object:format', PackageUtil.format, PackageUtil);
 }
