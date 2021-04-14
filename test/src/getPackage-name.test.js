@@ -90,7 +90,7 @@ if (test.categories.getPackage_name)
       it(`import.meta.url`, () =>
       {
          const result = getPackage({ filepath: import.meta.url });
-         assert.strictEqual(result.name, '@typhonjs-node-utils/package-util');
+         assert.strictEqual(result.name, '@typhonjs-utils/package-json');
       });
 
       it(`Dummy near root`, () =>

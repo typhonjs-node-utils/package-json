@@ -1,8 +1,8 @@
 {
-  "name": "@typhonjs-utils/package.json",
+  "name": "@typhonjs-utils/package-json",
   "description": "Provides several utility methods for working with `package.json`.",
   "version": "0.0.9",
-  "author": "typhonrt",
+  "author": "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)",
   "type": "module",
   "main": "src/index.js",
   "module": "src/index.js",
@@ -14,12 +14,8 @@
     "./getPackagePath": "./src/util/getPackagePath.js",
     "./getPackageType": "./src/util/getPackageType.js"
   },
-  "maintainers": [
-    {
-      "name": "Michael Leahy",
-      "email": "support@typhonjs.io",
-      "url": "https://github.com/typhonrt"
-    }
+  "contributors": [
+    "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
   ],
   "devDependencies": {
     "@typhonjs-utils/build-test": "^0.1.0"
@@ -31,15 +27,18 @@
     "/npm-shrinkwrap.json",
     "/src"
   ],
-  "homepage": "https://github.com/typhonjs-node-utils/package.json",
+  "homepage": "https://github.com/typhonjs-node-utils/package-json",
   "keywords": [
     "typhonjs",
     "utils",
     "package.json"
   ],
   "license": "MPL-2.0",
-  "bugs": "https://github.com/typhonjs-node-utils/package.json/issues",
-  "repository": "typhonjs-node-utils/package.json",
+  "bugs": {
+    "email": "support@typhonjs.io",
+    "url": "https://github.com/typhonjs-node-utils/package-json/issues"
+  },
+  "repository": "github:typhonjs-node-utils/package-json",
   "scripts": {
     "eslint": "eslint .",
     "posttest": "npm run eslint",
