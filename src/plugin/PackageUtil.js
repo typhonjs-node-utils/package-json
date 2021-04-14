@@ -18,11 +18,9 @@ import getPackageType   from '../util/getPackageType.js';
  * @property {string}   version -
  * @property {string}   type -
  * @property {string}   description -
- * @property {string}   author -
  * @property {string}   homepage -
  * @property {string}   license -
- * @property {string}   main -
- * @property {{type: string, url: string}}   repository -
+ * @property {{url: string}}   repository -
  * @property {{url: string}}   bugs -
  * @property {string}   formattedMessage -
  */
