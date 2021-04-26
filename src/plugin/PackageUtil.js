@@ -1,7 +1,8 @@
-import formatPackage    from '../util/formatPackage.js';
-import getPackage       from '../util/getPackage.js';
-import getPackagePath   from '../util/getPackagePath.js';
-import getPackageType   from '../util/getPackageType.js';
+import formatPackage       from '../util/formatPackage.js';
+import getPackage          from '../util/getPackage.js';
+import getPackageAndFormat from '../util/getPackageAndFormat.js';
+import getPackagePath      from '../util/getPackagePath.js';
+import getPackageType      from '../util/getPackageType.js';
 
 /**
  * @typedef {object} PackageObjData
@@ -74,7 +75,7 @@ export default class PackageUtil
     */
    static getPackageAndFormat(options)
    {
-      return PackageUtil.format(getPackage(options));
+      return getPackageAndFormat(options);
    }
 
    /**
@@ -156,9 +157,9 @@ export function onPluginLoad(ev)
 {
    const eventbus = ev.eventbus;
 
-   eventbus.on('typhonjs:utils:package:json:get', PackageUtil.getPackage, PackageUtil);
-   eventbus.on('typhonjs:utils:package:json:format:get', PackageUtil.getPackageAndFormat, PackageUtil);
-   eventbus.on('typhonjs:utils:package:json:path:get', PackageUtil.getPackagePath, PackageUtil);
-   eventbus.on('typhonjs:utils:package:json:type:get', PackageUtil.getPackageType, PackageUtil);
-   eventbus.on('typhonjs:utils:package:json:format', PackageUtil.format, PackageUtil);
+   eventbus.on('typhonjs:utils:package:json:get', PackageUtil.getPackage, PackageUtil, true);
+   eventbus.on('typhonjs:utils:package:json:format:get', PackageUtil.getPackageAndFormat, PackageUtil, true);
+   eventbus.on('typhonjs:utils:package:json:path:get', PackageUtil.getPackagePath, PackageUtil, true);
+   eventbus.on('typhonjs:utils:package:json:type:get', PackageUtil.getPackageType, PackageUtil, true);
+   eventbus.on('typhonjs:utils:package:json:format', PackageUtil.format, PackageUtil, true);
 }

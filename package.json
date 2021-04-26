@@ -1,7 +1,7 @@
 {
   "name": "@typhonjs-utils/package-json",
   "description": "Provides several utility methods for working with `package.json`.",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "author": "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)",
   "type": "module",
   "main": "src/index.js",
@@ -42,7 +42,7 @@
   "scripts": {
     "eslint": "eslint .",
     "posttest": "npm run eslint",
-    "prepublishOnly": "npm run eslint && npm run test",
+    "prepublishOnly": "npm run test",
     "test": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/**/*.test.js\""
   }
 }
