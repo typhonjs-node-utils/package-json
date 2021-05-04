@@ -2,24 +2,33 @@ import path                from 'path';
 
 import { assert }          from 'chai';
 
-import { getPackagePath }  from '../../src/index.js';
+import { getPackagePath }  from '../../src/functions.js';
 
 import test                from '../util/test.js';
 
-if (test.categories.getPackagePath_API)
+if (test.getPackagePath_API)
 {
    /**
     * Tests all of the API errors regarding invoking better errors as an external consumer.
     */
    describe(`getPackagePath - destructure bad data`, () =>
    {
-      it(`bad filepath`, () =>
+      it(`bad options`, () =>
       {
          const { packageObj, packagePath, error } = getPackagePath(false);
 
          assert.strictEqual(packageObj, void 0);
          assert.strictEqual(packagePath, void 0);
-         assert.strictEqual(error.toString(), `TypeError: 'filepath' is not a 'string' or file 'URL'`);
+         assert.strictEqual(error.toString(), `TypeError: 'options' is not an object`);
+      });
+
+      it(`bad filepath`, () =>
+      {
+         const { packageObj, packagePath, error } = getPackagePath({ filepath: false });
+
+         assert.strictEqual(packageObj, void 0);
+         assert.strictEqual(packagePath, void 0);
+         assert.strictEqual(error.toString(), `TypeError: 'filepath' is not a string or file URL`);
       });
 
       it(`bad basepath`, () =>
@@ -28,7 +37,7 @@ if (test.categories.getPackagePath_API)
 
          assert.strictEqual(packageObj, void 0);
          assert.strictEqual(packagePath, void 0);
-         assert.strictEqual(error.toString(), `TypeError: 'basepath' is not a 'string' or file 'URL'`);
+         assert.strictEqual(error.toString(), `TypeError: 'basepath' is not a string or file URL`);
       });
 
       it(`bad callback`, () =>
@@ -37,7 +46,7 @@ if (test.categories.getPackagePath_API)
 
          assert.strictEqual(packageObj, void 0);
          assert.strictEqual(packagePath, void 0);
-         assert.strictEqual(error.toString(), `TypeError: 'callback' is not a 'function'`);
+         assert.strictEqual(error.toString(), `TypeError: 'callback' is not a function`);
       });
 
       it(`nothing found`, () =>

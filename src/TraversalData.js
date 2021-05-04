@@ -60,20 +60,21 @@ export default class TraversalData
       this._callback = void 0;
    }
 
-   /**
-    * Returns true if basedir has been set comparing the starting directory against the base directory to
-    * determine if the base directory is a parent path intentionally stopping traversal.
-    *
-    * @returns {boolean} Whether basedir is set and a parent of the starting directory.
-    */
-   isBaseParent()
-   {
-      // If basepath is not configured it is set to root path.
-      if (this.baseDirectory === this.rootPath) { return false; }
-
-      const relative = path.relative(this.baseDirectory, this.currentDirectory);
-      return relative && !relative.startsWith('..') && !path.isAbsolute(relative);
-   }
+   // Currently unused
+   // /**
+   //  * Returns true if basedir has been set comparing the starting directory against the base directory to
+   //  * determine if the base directory is a parent path intentionally stopping traversal.
+   //  *
+   //  * @returns {boolean} Whether baseDirectory is set and a parent of the starting directory.
+   //  */
+   // isBaseParent()
+   // {
+   //    // If basepath is not configured it is set to root path.
+   //    if (this.baseDirectory === this.rootPath) { return false; }
+   //
+   //    const relative = path.relative(this.baseDirectory, this.currentDirectory);
+   //    return relative && !relative.startsWith('..') && !path.isAbsolute(relative);
+   // }
 
    /**
     * Parses the options object passed into the various getPackage functions.
@@ -96,21 +97,21 @@ export default class TraversalData
    {
       if (typeof filepath !== 'string' && !(filepath instanceof URL))
       {
-         throw new TypeError(`'filepath' is not a 'string' or file 'URL'`);
+         throw new TypeError(`'filepath' is not a string or file URL`);
       }
 
       if (basepath !== void 0 && typeof basepath !== 'string' && !(basepath instanceof URL))
       {
-         throw new TypeError(`'basepath' is not a 'string' or file 'URL'`);
+         throw new TypeError(`'basepath' is not a string or file URL`);
       }
 
       if (callback !== void 0 && typeof callback !== 'function')
       {
-         throw new TypeError(`'callback' is not a 'function'`);
+         throw new TypeError(`'callback' is not a function`);
       }
 
       // Convert basepath if an URL to a file path
-      if (basepath instanceof URL)
+      if (basepath !== void 0 && (basepath instanceof URL || basepath.startsWith('file:/')))
       {
          basepath = url.fileURLToPath(basepath);
       }
@@ -129,12 +130,6 @@ export default class TraversalData
       if (typeof basepath !== 'string')
       {
          basepath = path.parse(data.currentDirectory).root;
-      }
-
-      // Convert string file URL to path.
-      if (basepath.startsWith('file:/'))
-      {
-         basepath = url.fileURLToPath(basepath);
       }
 
       // Handle `basepath` as a directory or convert a path with file name to a directory.

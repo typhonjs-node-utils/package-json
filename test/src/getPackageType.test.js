@@ -1,6 +1,6 @@
 import { assert }          from 'chai';
 
-import { getPackageType }  from '../../src/index.js';
+import { getPackageType }  from '../../src/functions.js';
 
 import test                from '../util/test.js';
 
@@ -27,7 +27,7 @@ const checks = {
    ...pathInfo('SJ}::|?/\0///\\', 'commonjs')
 };
 
-if (test.categories.getPackageType)
+if (test.getPackageType)
 {
    /**
     * Test all checks defined above.

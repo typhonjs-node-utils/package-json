@@ -1,10 +1,10 @@
 import { assert }       from 'chai';
 
-import { getPackage }   from '../../src/index.js';
+import { getPackage }   from '../../src/functions.js';
 
 import test             from '../util/test.js';
 
-if (test.categories.getPackage_name_API)
+if (test.getPackage_name_API)
 {
    /**
     * Tests all of the API errors regarding invoking better errors as an external consumer.

@@ -1,10 +1,10 @@
 import { assert }          from 'chai';
 
-import { getPackageType }  from '../../src/index.js';
+import { getPackageType }  from '../../src/functions.js';
 
 import test                from '../util/test.js';
 
-if (test.categories.getPackageType_API)
+if (test.getPackageType_API)
 {
    /**
     * Test bad data input.

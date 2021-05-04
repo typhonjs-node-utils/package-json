@@ -1,6 +1,6 @@
 import { assert }          from 'chai';
 
-import { getPackageType }  from '../../src/index.js';
+import { getPackageType }  from '../../src/functions.js';
 
 import test                from '../util/test.js';
 
@@ -18,12 +18,12 @@ const checks = {
    ...pathInfo('./test/fixtures/packages/type-full/module/commonjs', 'commonjs'),
    ...pathInfo('./test/fixtures/packages/type-full/module/commonjs/no-package', 'commonjs'),
    ...pathInfo('./test/fixtures/packages/type-full/module/commonjs/no-package/no-type', 'commonjs'),
-   ...pathInfo('./test/fixtures/packages/type-full/module/no-type', 'module'),
-   ...pathInfo('./test/fixtures/packages/type-full/module/no-type/no-type', 'module'),
-   ...pathInfo('./test/fixtures/packages/type-full/module/no-type/no-type/no-package', 'module')
+   ...pathInfo('./test/fixtures/packages/type-full/module/no-type', 'commonjs'),
+   ...pathInfo('./test/fixtures/packages/type-full/module/no-type/no-type', 'commonjs'),
+   ...pathInfo('./test/fixtures/packages/type-full/module/no-type/no-type/no-package', 'commonjs')
 };
 
-if (test.categories.getPackageType_Full_Traverse)
+if (test.getPackageType_Full_Traverse)
 {
    /**
     * Test all checks defined above.

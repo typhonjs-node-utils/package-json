@@ -3,11 +3,11 @@ import url              from 'url';
 
 import { assert }       from 'chai';
 
-import { getPackage }   from '../../src/index.js';
+import { getPackage }   from '../../src/functions.js';
 
 import test             from '../util/test.js';
 
-if (test.categories.getPackage_name_URL)
+if (test.getPackage_name_URL)
 {
    describe(`getPackage as file URL string`, () =>
    {

@@ -2,11 +2,11 @@ import path             from 'path';
 
 import { assert }       from 'chai';
 
-import { getPackage }   from '../../src/index.js';
+import { getPackage }   from '../../src/functions.js';
 
 import test             from '../util/test.js';
 
-if (test.categories.getPackage_name)
+if (test.getPackage_name)
 {
    /**
     * Tests all of the API errors regarding invoking better errors as an external consumer.
@@ -74,6 +74,15 @@ if (test.categories.getPackage_name)
          const result = getPackage({
             filepath: './test/fixtures/packages/name/no-package-json/test.js',
             basepath: './test/fixtures/packages/name/no-package-json/'
+         });
+         assert.strictEqual(result, void 0);
+      });
+
+      it(`no-package-json w/ basepath defined as file path`, () =>
+      {
+         const result = getPackage({
+            filepath: './test/fixtures/packages/name/no-package-json/test.js',
+            basepath: './test/fixtures/packages/name/no-package-json/test.js'
          });
          assert.strictEqual(result, void 0);
       });
