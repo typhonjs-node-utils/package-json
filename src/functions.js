@@ -8,7 +8,7 @@ import TraversalData from './TraversalData.js';
  *
  * @param {object} packageObj - A loaded `package.json` object.
  *
- * @returns {NPMPackageData} The formatted package object.
+ * @returns {PackageObjFormatted} The formatted package object.
  */
 export function formatPackage(packageObj = {})
 {
@@ -43,9 +43,9 @@ export function formatPackage(packageObj = {})
    }
 
    /**
-    * Creates NPMPackageData result.
+    * Creates the PackageObjFormatted result.
     *
-    * @type {NPMPackageData}
+    * @type {PackageObjFormatted}
     */
    const packageData = {
       name: packageObj.name,
@@ -82,15 +82,7 @@ export function formatPackage(packageObj = {})
  * Note: If malformed data is presented the result will undefined. Also note that a file may be specified that
  * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
  *
- * @param {object}      options - An object.
- *
- * @param {string|URL}  options.filepath - Initial file or directory path to search for `package.json`.
- *
- * @param {string|URL}  [options.basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
- *                                           provided.
- *
- * @param {Function}    [options.callback] - A function that evaluates any loaded package.json object that passes back a
- *                                           truthy value that stops or continues the traversal.
+ * @param {PackageOptions} options - The package options.
  *
  * @returns {object|undefined} Loaded `package.json` or undefined if an error has occurred or basepath or root
  *                             directory has been reached.
@@ -109,15 +101,7 @@ export function getPackage(options)
  * Note: If malformed data is presented the result will undefined. Also note that a file may be specified that
  * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
  *
- * @param {object}      options - An object.
- *
- * @param {string|URL}  options.filepath - Initial file or directory path to search for `package.json`.
- *
- * @param {string|URL}  [options.basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
- *                                           provided.
- *
- * @param {Function}    [options.callback] - A function that evaluates any loaded package.json object that passes
- *                                           back a truthy value that stops or continues the traversal.
+ * @param {PackageOptions} options - The package options.
  *
  * @returns {object} Formatted package.json or empty object if an error has occurred.
  */
@@ -133,15 +117,7 @@ export function getPackageAndFormat(options)
  * object / `PackageObjData`. Also note that a file may be specified that does not exist and the directory will be
  * resolved. If that directory exists then resolution will continue.
  *
- * @param {object}      options - An object.
- *
- * @param {string|URL}  options.filepath - Initial file or directory path to search for `package.json`.
- *
- * @param {string|URL}  [options.basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
- *                                           provided.
- *
- * @param {Function}    [options.callback] - A function that evaluates any loaded package.json object that passes back a
- *                                           truthy value that stops or continues the traversal.
+ * @param {PackageOptions} options - The package options.
  *
  * @returns {PackageObjData} Loaded package.json / path or potentially an error.
  */
@@ -220,15 +196,7 @@ export function getPackagePath(options)
  * Traversal stops at the first valid `package.json` file as this is how Node works. If the first found `package.json`
  * does not have a `type` field then `commonjs` is returned.
  *
- * @param {object}      options - An object.
- *
- * @param {string|URL}  options.filepath - Initial file or directory path to search for `package.json`.
- *
- * @param {string|URL}  [options.basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
- *                                           provided.
- *
- * @param {Function}    [options.callback] - A function that evaluates any loaded package.json object that passes back a
- *                                           truthy value that stops or continues the traversal.
+ * @param {PackageOptions} options - The package options.
  *
  * @returns {string} Type of package - 'module' for ESM otherwise 'commonjs'.
  */
