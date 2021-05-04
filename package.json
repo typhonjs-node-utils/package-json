@@ -1,6 +1,6 @@
 {
   "name": "@typhonjs-utils/package-json",
-  "description": "Provides several utility methods for working with `package.json`.",
+  "description": "Provides several utility functions for working with and retrieving `package.json`.",
   "version": "0.0.10",
   "author": "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)",
   "type": "module",

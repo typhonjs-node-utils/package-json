@@ -6,7 +6,10 @@ import PluginManager       from '@typhonjs-plugin/manager';
 
 import test                from '../util/test.js';
 
-if (test.plugin)
+const isNode12_0_0 =  process.version === 'v12.0.0';
+
+// PluginManager requires Node 12.2+
+if (test.plugin && !isNode12_0_0)
 {
    describe(`PluginManager`, () =>
    {
