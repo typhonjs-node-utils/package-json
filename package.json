@@ -4,24 +4,21 @@
   "version": "0.0.10",
   "author": "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)",
   "type": "module",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "main": "src/functions.js",
+  "module": "src/functions.js",
   "exports": {
-    ".": "./src/index.js",
-    "./plugin": "./src/plugin/PackageUtil.js",
-    "./formatPackage": "./src/util/formatPackage.js",
-    "./getPackage": "./src/util/getPackage.js",
-    "./getPackagePath": "./src/util/getPackagePath.js",
-    "./getPackageType": "./src/util/getPackageType.js"
+    ".": "./src/functions.js",
+    "./plugin": "./src/plugin.js"
   },
   "contributors": [
     "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
   ],
   "devDependencies": {
+    "@typhonjs-plugin/manager": "^0.0.1",
     "@typhonjs-utils/build-test": "^0.1.0"
   },
   "engines": {
-    "node": ">=12.0.0"
+    "node": ">=12"
   },
   "files": [
     "/npm-shrinkwrap.json",
