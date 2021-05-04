@@ -8,9 +8,6 @@ import test                from '../util/test.js';
 
 if (test.getPackagePath)
 {
-   /**
-    * TODO: Add passing / positive tests for getPackagePath
-    */
    describe(`getPackagePath`, () =>
    {
       it('module package.json', () =>

@@ -13,6 +13,5 @@ export default {
    getPackageType: true,
    getPackageType_API: true,
    getPackageType_Full_Traverse: true,
-   PackageUtil: true,
-   PackageUtil_API: true
+   plugin: true
 };
