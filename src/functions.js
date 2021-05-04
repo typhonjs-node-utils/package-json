@@ -40,6 +40,8 @@ export function formatPackage(packageObj = {})
    if (packageObj.repository)
    {
       repoURL = packageObj.repository.url ? packageObj.repository.url : packageObj.repository;
+
+      if (typeof repoURL !== 'string') { repoURL = void 0; }
    }
 
    /**
