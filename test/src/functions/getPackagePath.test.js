@@ -2,9 +2,9 @@ import path                from 'path';
 
 import { assert }          from 'chai';
 
-import { getPackagePath }  from '../../src/functions.js';
+import { getPackagePath }  from '../../../src/functions.js';
 
-import test                from '../util/test.js';
+import test                from '../../util/test.js';
 
 if (test.getPackagePath)
 {

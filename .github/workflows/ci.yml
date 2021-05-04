@@ -31,8 +31,11 @@ jobs:
       - name: Install esm
         run: npm install esm
 
-      - name: Run the tests
-        run: npm run test --experimental-modules -- --require esm
+      - name: Run the tests (functions only)
+        run: npm run test-functions --experimental-modules -- --require esm
+
+      - name: Run eslint
+        run: npm run eslint
 
   build-node:
     strategy:

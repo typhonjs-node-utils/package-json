@@ -1,8 +1,8 @@
 import { assert }          from 'chai';
 
-import test                from '../util/test.js';
+import test                from '../../util/test.js';
 
-import { formatPackage }   from '../../src/functions.js';
+import { formatPackage }   from '../../../src/functions.js';
 
 if (test.formatPackage_API)
 {

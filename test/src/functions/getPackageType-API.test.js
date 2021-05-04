@@ -1,8 +1,8 @@
 import { assert }          from 'chai';
 
-import { getPackageType }  from '../../src/functions.js';
+import { getPackageType }  from '../../../src/functions.js';
 
-import test                from '../util/test.js';
+import test                from '../../util/test.js';
 
 if (test.getPackageType_API)
 {
