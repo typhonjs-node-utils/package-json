@@ -23,7 +23,8 @@
   "types": "./types/functions.d.ts",
   "files": [
     "/npm-shrinkwrap.json",
-    "/src"
+    "/src",
+    "/types"
   ],
   "homepage": "https://github.com/typhonjs-node-utils/package-json#readme",
   "keywords": [
