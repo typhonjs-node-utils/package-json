@@ -8,12 +8,12 @@ import TraversalData from './TraversalData.js';
  *
  * @param {object} packageObj - A loaded `package.json` object.
  *
- * @returns {PackageObjFormatted} The formatted package object.
+ * @returns {PackageObjFormatted|undefined} The formatted package object or undefined.
  */
-export function formatPackage(packageObj = {})
+export function formatPackage(packageObj)
 {
-   // Sanity case to create empty object.
-   if (typeof packageObj !== 'object') { packageObj = {}; }
+   // Sanity case to exit early.
+   if (typeof packageObj !== 'object') { return void 0; }
 
    let bugsURL, repository;
 
@@ -103,12 +103,9 @@ export function getPackage(options)
 /**
  * Attempts to find the nearest package.json via `getPackage` then passes the results to `formatPackage`.
  *
- * Note: If malformed data is presented the result will undefined. Also note that a file may be specified that
- * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
- *
  * @param {PackageQueryOptions} options - The package query options.
  *
- * @returns {object} Formatted package.json or empty object if an error has occurred.
+ * @returns {PackageObjFormatted|undefined} Formatted package.json or undefined.
  */
 export function getPackageAndFormat(options)
 {
