@@ -163,7 +163,7 @@ export function getPackageWithPath(options)
                // the loaded `package.json` object & path.
                if (typeof data.callback === 'function')
                {
-                  if (data.callback.call(context, data.toUnix()))
+                  if (data.callback.call(context, data.toUnixPaths()))
                   {
                      return { packageObj: data.packageObj, packagePath: data.packagePath };
                   }

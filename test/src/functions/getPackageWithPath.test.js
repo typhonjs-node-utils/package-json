@@ -31,8 +31,13 @@ if (test.getPackageWithPath)
           `${path.resolve('./test/fixtures/packages/name')}${path.sep}package.json`);
       });
 
-      it('with callback function (test if unix paths exist)', () =>
+      it('with callback function (test if unix paths exist / verify relativeDir)', () =>
       {
+         const checkRelativeDir = [
+            'test/fixtures/packages/name/name-missing',
+            'test/fixtures/packages/name'
+         ];
+
          getPackageWithPath({
             filepath: './test/fixtures/packages/name/name-missing',
             callback: (data) =>
@@ -42,6 +47,8 @@ if (test.getPackageWithPath)
                assert.isTrue(fs.existsSync(data.packagePath));
                assert.isTrue(fs.existsSync(data.relativeDir));
                assert.isTrue(fs.existsSync(data.rootPath));
+
+               assert.strictEqual(data.relativeDir, checkRelativeDir[data.cntr]);
 
                return typeof data.packageObj.name === 'string';
             }

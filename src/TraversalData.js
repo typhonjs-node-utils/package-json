@@ -158,7 +158,7 @@ export default class TraversalData
     *
     * @returns {TraversalDataObj} The data object to pass to any traversal callback defined.
     */
-   toUnix()
+   toUnixPaths()
    {
       return {
          baseDir: this._baseDirUnix,
