@@ -28,13 +28,13 @@ optional callback function that is invoked during traversal of the file system a
 
 There are five functions available as named exports:
 
-| Function Name       | Description                                                                                |
-| ------------------- | ------------------------------------------------------------------------------------------ |
-| formatPackage       | Accepts a loaded package object and normalizes the data.                                   | 
-| getPackage          | Retrieves the package object specified by the query.                                       |
-| getPackageAndFormat | Retrieves the package object then returns the formatted result.                            |
-| getPackageType      | Retrieves the package object then returns the `type` field; either `module` or `commonjs`. |
-| getPackageWithPath  | Retrieves the package object and returns it with the path.                                 |
+| Function Name       | Description                                                                                   |
+| ------------------- | --------------------------------------------------------------------------------------------- |
+| formatPackage       | Accepts a loaded package object and normalizes the data.                                      | 
+| getPackage          | Retrieves the package object specified by the query.                                          |
+| getPackageAndFormat | Retrieves the package object then returns the formatted result.                               |
+| getPackageType      | Retrieves the package object then returns the `type` property; either `module` or `commonjs`. |
+| getPackageWithPath  | Retrieves the package object and returns it with the path.                                    |
 
 ### Package query object:
 While `formatPackage` accepts a loaded `package.json` object all other functions require a query object containing the 
@@ -51,10 +51,10 @@ the containing directory does need to exist. Likewise, the same condition applie
 
 ### Package resolution:
 By default `Node.js` will load the nearest `package.json` in a given file structure. This is important to realize when
-dealing with the `type` field as intermediary `package.json` files above the module root path will be resolved to 
+dealing with the `type` property as intermediary `package.json` files above the module root path will be resolved to 
 determine the type of source for `*.js` files at that directory level and lower. If the intermediary `package.json` does
-not contain a type field then `commonjs` is assumed by default. To match this behavior `getPackageType` stops traversal
-at the first `package.json` found from a given query. 
+not contain a type property then `commonjs` is assumed by default. To match this behavior `getPackageType` stops 
+traversal at the first `package.json` found from a given query. 
 
 ### `getPackageWithPath` / PackageObjData:
 
@@ -130,7 +130,7 @@ const type = getPackageType({ filepath: import.meta.url });
 ```js
 import { getPackage } from '@typhonjs-utils/package-json';
 
-// Loads specific `package.json` with name field matching 'target-package' from traversal from current source directory.
+// Loads specific `package.json` with name property matching 'target-package' from traversal from current source directory.
 const packageObj = getPackage({ 
    filepath: import.meta.url, 
    callback: (data) => data.packageObj.name === 'target-package' 
@@ -161,7 +161,7 @@ offending module.
 
 ### TyphonJS plugin:
 
-For Node v12.17+ there is a specific export for the TyphonJS plugin via the exports field:
+For Node v12.17+ there is a specific export for the TyphonJS plugin via the exports property:
 `@typhonjs-utils/package-json/plugin`. 
 
 This plugin works with [@typhonjs-plugin/manager](https://www.npmjs.com/package/@typhonjs-plugin/manager) and simply 
