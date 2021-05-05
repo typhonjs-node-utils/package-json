@@ -13,15 +13,16 @@
  *
  * @typedef {object} PackageObjFormatted
  *
- * @property {string}                        name - Name field
- * @property {string}                        version - Version field
- * @property {string}                        type - `module` or `commonjs`
- * @property {string}                        description - Description field.
- * @property {string}                        homepage - Homepage field
- * @property {string}                        license - License field
- * @property {{url: string}}                 repository - The unparsed URL or repository string.
- * @property {{email: string, url: string}}  bugs - Email / URL from bugs field.
- * @property {string}                        formattedMessage - A formatted message describing the package.
+ * @property {string}   name - Name field.
+ * @property {string}   version - Version field.
+ * @property {string}   type - `module` or `commonjs`.
+ * @property {string}   description - Description field.
+ * @property {string}   homepage - Homepage field.
+ * @property {string}   license - License field.
+ * @property {string}   repository - The repository URL or unparsed repository string.
+ * @property {string}   bugsURL - URL from bugs field.
+ * @property {string}   bugsEmail - Email from bugs field.
+ * @property {string}   formattedMessage - A formatted message describing the package.
  */
 
 /**
@@ -34,6 +35,6 @@
  * @property {string|URL}  [basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
  *                                      provided.
  *
- * @property {Function}    [callback] - A function that evaluates any loaded package.json object that passes
- *                                      back a truthy value that stops or continues the traversal.
+ * @property {Function}    [callback] - A function that evaluates any loaded package.json object that returns a truthy
+ *                                      value that stops or continues the traversal.
  */

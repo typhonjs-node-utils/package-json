@@ -60,22 +60,6 @@ export default class TraversalData
       this._callback = void 0;
    }
 
-   // Currently unused
-   // /**
-   //  * Returns true if basedir has been set comparing the starting directory against the base directory to
-   //  * determine if the base directory is a parent path intentionally stopping traversal.
-   //  *
-   //  * @returns {boolean} Whether baseDirectory is set and a parent of the starting directory.
-   //  */
-   // isBaseParent()
-   // {
-   //    // If basepath is not configured it is set to root path.
-   //    if (this.baseDirectory === this.rootPath) { return false; }
-   //
-   //    const relative = path.relative(this.baseDirectory, this.currentDirectory);
-   //    return relative && !relative.startsWith('..') && !path.isAbsolute(relative);
-   // }
-
    /**
     * Parses the options object passed into the various getPackage functions.
     *

@@ -12,37 +12,46 @@ import TraversalData from './TraversalData.js';
  */
 export function formatPackage(packageObj = {})
 {
-   let bugsEmail, bugsURL, repoURL;
-
    // Sanity case to create empty object.
-   if (typeof packageObj !== 'object')
-   {
-      packageObj = {};
-   }
+   if (typeof packageObj !== 'object') { packageObj = {}; }
+
+   let bugsURL, repository;
+
+   const description = typeof packageObj.description === 'string' ? packageObj.description : '';
 
    // Parse bugs email.
-   if (packageObj.bugs)
-   {
-      bugsEmail = packageObj.bugs.email ? packageObj.bugs.email : void 0;
+   const bugsEmail = typeof packageObj.bugs === 'object' ? typeof packageObj.bugs.email === 'string' ?
+    packageObj.bugs.email : '' : '';
 
-      if (typeof bugsEmail !== 'string') { bugsEmail = void 0; }
+   // Parse bugs url.
+   if (typeof packageObj.bugs === 'object')
+   {
+      bugsURL = typeof packageObj.bugs.url === 'string' ? packageObj.bugs.url : '';
+   }
+   else
+   {
+      bugsURL = typeof packageObj.bugs === 'string' ? packageObj.bugs : '';
    }
 
-   // Parse bugs URL.
-   if (packageObj.bugs)
-   {
-      bugsURL = packageObj.bugs.url ? packageObj.bugs.url : packageObj.bugs;
+   const homepage = typeof packageObj.homepage === 'string' ? packageObj.homepage : '';
 
-      if (typeof bugsURL !== 'string') { bugsURL = void 0; }
+   const license = typeof packageObj.license === 'string' ? packageObj.license : '';
+
+   const name = typeof packageObj.name === 'string' ? packageObj.name : '';
+
+   // Parse repository.
+   if (typeof packageObj.repository === 'object')
+   {
+      repository = typeof packageObj.repository.url === 'string' ? packageObj.repository.url : '';
+   }
+   else
+   {
+      repository = typeof packageObj.repository === 'string' ? packageObj.repository : '';
    }
 
-   // Parse repository URL.
-   if (packageObj.repository)
-   {
-      repoURL = packageObj.repository.url ? packageObj.repository.url : packageObj.repository;
+   const type = packageObj.type === 'module' ? 'module' : 'commonjs';
 
-      if (typeof repoURL !== 'string') { repoURL = void 0; }
-   }
+   const version = typeof packageObj.version === 'string' ? packageObj.version : '';
 
    /**
     * Creates the PackageObjFormatted result.
@@ -50,30 +59,24 @@ export function formatPackage(packageObj = {})
     * @type {PackageObjFormatted}
     */
    const packageData = {
-      name: packageObj.name,
-      version: packageObj.version,
-      type: packageObj.type === 'module' ? 'module' : 'commonjs',
-      description: packageObj.description,
-      homepage: packageObj.homepage,
-      license: packageObj.license,
-      repository: { url: repoURL },
-      bugs: { email: bugsEmail, url: bugsURL }
+      name,
+      version,
+      description,
+      type,
+      homepage,
+      license,
+      repository,
+      bugsURL,
+      bugsEmail,
+      formattedMessage: ''
    };
 
-   let formattedMessage = '';
-
-   if (packageData.name)
-   {
-      formattedMessage += `name: ${packageData.name}${packageData.version ? ` (${packageData.version})` : ''}`;
-   }
-
-   if (packageData.description) { formattedMessage += `\ndescription: ${packageData.description}`; }
-   if (packageData.homepage) { formattedMessage += `\nhomepage: ${packageData.homepage}`; }
-   if (packageData.repository.url) { formattedMessage += `\nrepository: ${packageData.repository.url}`; }
-   if (packageData.bugs.url) { formattedMessage += `\nbugs / issues: ${packageData.bugs.url}`; }
-   if (packageData.bugs.email) { formattedMessage += `\nbugs / email: ${packageData.bugs.email}`; }
-
-   packageData.formattedMessage = formattedMessage;
+   if (name !== '') { packageData.formattedMessage += `name: ${name}${version !== '' ? ` (${version})` : ''}`; }
+   if (description !== '') { packageData.formattedMessage += `\ndescription: ${description}`; }
+   if (homepage !== '') { packageData.formattedMessage += `\nhomepage: ${homepage}`; }
+   if (repository !== '') { packageData.formattedMessage += `\nrepository: ${repository}`; }
+   if (bugsURL !== '') { packageData.formattedMessage += `\nbugs / issues: ${bugsURL}`; }
+   if (bugsEmail !== '') { packageData.formattedMessage += `\nbugs / email: ${bugsEmail}`; }
 
    return packageData;
 }

@@ -5,7 +5,7 @@ import { getPackage }      from '../../../src/functions.js';
 
 import test                from '../../util/test.js';
 
-const s_VERIFY_DATA = (version) => `{"name":"@typhonjs-utils/package-json","version":"${version}","type":"module","description":"Provides several utility functions for working with and retrieving \`package.json\`.","homepage":"https://github.com/typhonjs-node-utils/package-json","license":"MPL-2.0","repository":{"url":"github:typhonjs-node-utils/package-json"},"bugs":{"email":"support@typhonjs.io","url":"https://github.com/typhonjs-node-utils/package-json/issues"},"formattedMessage":"name: @typhonjs-utils/package-json (${version})\\ndescription: Provides several utility functions for working with and retrieving \`package.json\`.\\nhomepage: https://github.com/typhonjs-node-utils/package-json\\nrepository: github:typhonjs-node-utils/package-json\\nbugs / issues: https://github.com/typhonjs-node-utils/package-json/issues\\nbugs / email: support@typhonjs.io"}`;
+import verifyFormatted     from '../../util/verifyFormatted.js';
 
 if (test.formatPackage)
 {
@@ -16,23 +16,79 @@ if (test.formatPackage)
          const packageObj = getPackage({ filepath: import.meta.url });
          const data = formatPackage(packageObj);
 
-         assert.strictEqual(JSON.stringify(data), s_VERIFY_DATA(data.version));
+         assert.deepEqual(data, verifyFormatted(data.version));
+      });
+
+      it('formatPackage - bugs:', () =>
+      {
+         const data = formatPackage({ bugs: 'test' });
+
+         assert.deepEqual(data, {
+            name: '',
+            version: '',
+            description: '',
+            type: 'commonjs',
+            homepage: '',
+            license: '',
+            repository: '',
+            bugsURL: 'test',
+            bugsEmail: '',
+            formattedMessage: '\nbugs / issues: test'
+         });
       });
 
       it('formatPackage - repository.url:', () =>
       {
          const data = formatPackage({ repository: { url: 'test' } });
 
-         assert.strictEqual(JSON.stringify(data),
-          '{"type":"commonjs","repository":{"url":"test"},"bugs":{},"formattedMessage":"\\nrepository: test"}');
+         assert.deepEqual(data, {
+            name: '',
+            version: '',
+            description: '',
+            type: 'commonjs',
+            homepage: '',
+            license: '',
+            repository: 'test',
+            bugsURL: '',
+            bugsEmail: '',
+            formattedMessage: '\nrepository: test'
+         });
+      });
+
+      it('formatPackage - repository', () =>
+      {
+         const data = formatPackage({ repository: 'test' });
+
+         assert.deepEqual(data, {
+            name: '',
+            version: '',
+            description: '',
+            type: 'commonjs',
+            homepage: '',
+            license: '',
+            repository: 'test',
+            bugsURL: '',
+            bugsEmail: '',
+            formattedMessage: '\nrepository: test'
+         });
       });
 
       it('formatPackage - name no version:', () =>
       {
-         const data = formatPackage({ name: 'a name' });
+         const data = formatPackage({ name: 'a-name' });
 
-         assert.strictEqual(JSON.stringify(data),
-          '{"name":"a name","type":"commonjs","repository":{},"bugs":{},"formattedMessage":"name: a name"}');
+         assert.deepEqual(data, {
+            name: 'a-name',
+            version: '',
+            description: '',
+            type: 'commonjs',
+            homepage: '',
+            license: '',
+            repository: '',
+            bugsURL: '',
+            bugsEmail: '',
+            formattedMessage: 'name: a-name'
+         });
       });
    });
 }
