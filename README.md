@@ -93,9 +93,6 @@ to `/`. The data available in the traversal callback object:
 | relativeDir | string | Current directory of traversal as a relative Unix styled path from `process.cwd`. |
 | rootPath    | string | The root path to stop traversal as a Unix styled path.                            |
 
-It should be noted that one should not modify this data and only use it for evaluating whether the currently loaded
-`package.json` object is the target to be returned. 
-
 ### Examples:
 ```js
 import { formatPackage } from '@typhonjs-utils/package-json';
