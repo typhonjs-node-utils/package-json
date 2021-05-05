@@ -40,19 +40,25 @@ There are five functions available as named exports:
 While `formatPackage` accepts a loaded `package.json` object all other functions require a query object containing the 
 following data:
 
-| Property   | Type         | Description                                                                                                                           |
-| ---------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| filepath   | string / URL | Initial file or directory path to traverse for `package.json`.                                                                        | 
-| [basepath] | string / URL | Optional: Base path to stop traversing. Set to the root path of `filepath` if not provided.                                           |
-| [callback] | Function     | Optional: A function that evaluates any loaded package.json object that returns a truthy value that stops or continues the traversal. |
+| Property   | Type         | Description                                                                                                                                                 |
+| ---------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| filepath   | string / URL | Initial file or directory path to traverse for `package.json`.                                                                                              | 
+| [basepath] | string / URL | Optional: Base path to stop traversing. Set to the root path of `filepath` if not provided.                                                                 |
+| [callback] | Function     | Optional: A function that evaluates a loaded package.json object and associated traversal data returning a truthy value to stops or continue the traversal. |
 
-`filepath` is required. It should be noted that if the path references a file that this file does not need to exist, but
-the containing directory does need to exist. Likewise, the same condition applies to any optional `basepath` supplied.
+`filepath` is required and may be a file or directory path as a string or file URL including `import.meta.url`. It 
+should be noted that if the path references a file that this file does not need to exist, but the containing directory 
+does need to exist. Likewise, the same condition applies to any optional `basepath` supplied. 
+
+A caveat with this handling of `filepath` is that if a non-existent path is given such as `'a bad path'` this will 
+resolve to `'.'` or the current working directory. In practice this is not an issue, but something to keep in mind. 
+
+`basepath` should be a parent path of `filepath` for it to have any effect on stopping traversal early.
 
 ### Package resolution:
 By default `Node.js` will load the nearest `package.json` in a given file structure. This is important to realize when
-dealing with the `type` property as intermediary `package.json` files above the module root path will be resolved to 
-determine the type of source for `*.js` files at that directory level and lower. If the intermediary `package.json` does
+dealing with the `type` property as intermediary `package.json` files above the module root path will be loaded to 
+determine the type of source for `*.js` files at that directory path and lower. If the intermediary `package.json` does
 not contain a type property then `commonjs` is assumed by default. To match this behavior `getPackageType` stops 
 traversal at the first `package.json` found from a given query. 
 
@@ -61,9 +67,9 @@ traversal at the first `package.json` found from a given query.
 All functions besides `formatPackage` rely on `getPackageWithPath`. `getPackageWithPath` will not throw on any errors
 encountered and will always return a PackageObjData object. If an error occurs the `error` property will contain the 
 error thrown and `packageObj` will be undefined and `filepath` / `filepathUnix` may be defined if the error occurred 
-loading a specific `package.json`. Likewise, if traversal completes without locating `package.json` then error will 
-contain a message indicating this failure. On success `packageObj`, `filepath`, and `filepathUnix` are defined and error
-is undefined.
+loading a specific `package.json`; IE when malformed. If traversal completes without locating `package.json` then error
+will contain a message indicating this failure. On success `packageObj`, `filepath`, and `filepathUnix` are defined and
+error is undefined.
 
 | Property       | Type               | Description                                                    |
 | -------------- | ------------------ | -------------------------------------------------------------- |
@@ -129,7 +135,7 @@ const type = getPackageType({ filepath: import.meta.url });
 ```js
 import { getPackage } from '@typhonjs-utils/package-json';
 
-// Loads specific `package.json` with name property matching 'target-package' from traversal from current source directory.
+// Loads a specific `package.json` with name property matching 'target-package' from traversal from current source directory.
 const packageObj = getPackage({ 
    filepath: import.meta.url, 
    callback: (data) => data.packageObj.name === 'target-package' 
@@ -155,7 +161,7 @@ to have these properties defined and empty strings for any properties not define
 | bugsEmail        | string | Email from bugs property.                                                 |
 | formattedMessage | string | A consistently formatted message describing the package.                  |
 
-In TyphonJS modules `getPackageAndFormat` is used in combination with
+In various TyphonJS modules `getPackageAndFormat` is used in combination with
 [@typhonjs-utils/error-parser](https://www.npmjs.com/package/@typhonjs-utils/error-parser) primarily to print / log a
 consistent message in error reporting about any offending module.
 
