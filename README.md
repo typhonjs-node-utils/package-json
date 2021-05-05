@@ -72,7 +72,7 @@ function parameter. The data available in the traversal object:
 It should be noted that one should not modify this data and only use it for evaluating whether the currently loaded
 `package.json` object is the target to be returned. 
 
-### Examples
+### Examples:
 ```js
 import { formatPackage } from '@typhonjs-utils/package-json';
 
