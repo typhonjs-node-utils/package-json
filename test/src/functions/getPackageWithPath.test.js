@@ -50,13 +50,16 @@ if (test.getPackageWithPath)
             'test/fixtures/packages/name'
          ];
 
-         getPackageWithPath({
+         // As getPackageWithPath is wrapped in a try / catch internally we must check if the returned object
+         // contains an error.
+
+         const { error } = getPackageWithPath({
             filepath: './test/fixtures/packages/name/name-missing',
             callback: (data) =>
             {
                assert.isTrue(fs.existsSync(data.baseDir));
                assert.isTrue(fs.existsSync(data.currentDir));
-               assert.isTrue(fs.existsSync(data.packagePath));
+               assert.isTrue(fs.existsSync(data.filepath));
                assert.isTrue(fs.existsSync(data.relativeDir));
                assert.isTrue(fs.existsSync(data.rootPath));
 
@@ -65,6 +68,8 @@ if (test.getPackageWithPath)
                return typeof data.packageObj.name === 'string';
             }
          });
+
+         assert.isUndefined(error, error !== void 0 ? error.message : '');
       });
    });
 }

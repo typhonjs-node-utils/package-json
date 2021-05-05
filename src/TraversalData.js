@@ -178,7 +178,7 @@ export default class TraversalData
          cntr: this.cntr,
          currentDir: TraversalData.toUnixPath(this.currentDir),
          packageObj: this.packageObj,
-         packagePath: TraversalData.toUnixPath(this.packagePath),
+         filepath: TraversalData.toUnixPath(this.packagePath),
          relativeDir: TraversalData.toUnixPath(path.relative(process.cwd(), this.currentDir)),
          rootPath: this._rootPathUnix
       };

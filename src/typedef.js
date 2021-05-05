@@ -50,7 +50,7 @@
  * @property {number}   cntr - Stores the number of times a `package.json` has been processed.
  * @property {string}   currentDir - Current directory of traversal as a Unix styled path.
  * @property {object}   packageObj - Current loaded `package.json` object.
- * @property {string}   packagePath - Current loaded `package.json` object path as a Unix styled path.
+ * @property {string}   filepath - Current loaded `package.json` file path as a Unix styled path.
  * @property {string}   relativeDir - Current directory of traversal as a relative Unix styled path from `process.cwd`.
  * @property {string}   rootPath - The root path to stop traversal as a Unix styled path.
  */
