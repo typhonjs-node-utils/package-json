@@ -15,10 +15,10 @@ queries made.
 ### Why:
 
 When developing in an ES Module environment on Node these functions make it easy to retrieve any local `package.json` 
-file through the use of a file path or file URL including `import.meta.url`. There are a few variations on specific 
-information retrieved from the located `package.json` file such as the module type which is accomplished with 
+through the use of a file path or file URL including `import.meta.url`. There are a few variations on specific 
+information retrieved from the located `package.json` such as the module type which is accomplished with 
 `getPackageType`. There is additional flexibility in finding a specific `package.json` as well through the use of an
-optional callback function that is invoked during traversal of the file system as each `package.json` file is located.
+optional callback function that is invoked during traversal of the file system as each `package.json` is located.
 
 ### Installation:
 
@@ -28,13 +28,13 @@ optional callback function that is invoked during traversal of the file system a
 
 There are five functions available as named exports:
 
-| Function Name       | Description                                                     |
-| ------------------- | --------------------------------------------------------------- |
-| formatPackage       | Accepts a loaded package object and normalizes the data.        | 
-| getPackage          | Retrieves the package object specified by the query.            |
-| getPackageAndFormat | Retrieves the package object then returns the formatted result. |
-| getPackageType      | Retrieves the package object then returns the `type` field.     |
-| getPackageWithPath  | Retrieves the package object and returns it with the path.      |
+| Function Name       | Description                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------ |
+| formatPackage       | Accepts a loaded package object and normalizes the data.                                   | 
+| getPackage          | Retrieves the package object specified by the query.                                       |
+| getPackageAndFormat | Retrieves the package object then returns the formatted result.                            |
+| getPackageType      | Retrieves the package object then returns the `type` field; either `module` or `commonjs`. |
+| getPackageWithPath  | Retrieves the package object and returns it with the path.                                 |
 
 ### Package query object:
 While `formatPackage` accepts a loaded `package.json` object all other functions require a query object containing the 
@@ -52,21 +52,41 @@ the containing directory does need to exist. Likewise, the same condition applie
 ### Package resolution:
 By default `Node.js` will load the nearest `package.json` in a given file structure. This is important to realize when
 dealing with the `type` field as intermediary `package.json` files above the module root path will be resolved to 
-determine the type of source for `*.js` files. If the intermediary `package.json` file does not contain a type field 
-then `commonjs` is assumed by default. To match this behavior `getPackageType` by default stops traversal at the first 
-`package.json` file found from a given query. 
+determine the type of source for `*.js` files at that directory level and lower. If the intermediary `package.json` does
+not contain a type field then `commonjs` is assumed by default. To match this behavior `getPackageType` stops traversal
+at the first `package.json` found from a given query. 
+
+### `getPackageWithPath` / PackageObjData:
+
+All functions besides `formatPackage` rely on `getPackageWithPath`. `getPackageWithPath` will not throw on any errors
+encountered and will always return a PackageObjData object. If an error occurs the `error` property will contain the 
+error thrown and `packageObj` and `packagePath` will be undefined. Likewise, if traversal completes without locating 
+a `package.json` object then error will contain a message indicating such. On success both `packageObj` and 
+`packagePath` are defined.
+
+| Property      | Type               | Description                           |
+| ------------- | ------------------ | ------------------------------------- |
+| [packageObj]  | object / undefined | Loaded `package.json` object.         | 
+| [packagePath] | string / undefined | Path of loaded `package.json` object. |
+| [error]       | Error / undefined  | A potential error instance.           |
+
+### `getPackageType`:
+
+`getPackageType` always returns either `module` or `commonjs` depending on the `type` property of the located 
+`package.json`; `module` is only returned if `"type": "module"` is set. By default, traversal stops at the first 
+encountered `package.json`. Any error condition / malformed `package.json` or failure to locate `package.json`  will 
+return `commonjs`.  
 
 ### Traversal callback function / data object:
 
 If a callback function is included in the query object it will be invoked with a TraversalData object with all paths
 converted to Unix styled paths as the only function parameter. On Windows any `\` and `\\` path separators are converted
-to `/`. The data available in the traversal object:
-
+to `/`. The data available in the traversal callback object:
 
 | Property    | Type   | Description                                                                       |
 | ----------- | ------ | --------------------------------------------------------------------------------- |
 | baseDir     | string | Stores the `basepath` directory as a Unix styled path.                            | 
-| cntr        | number | Stores the number of times a package has been processed.                          |
+| cntr        | number | Stores the number of times a `package.json` has been processed.                   |
 | currentDir  | string | Current directory of traversal as a Unix styled path.                             |
 | packageObj  | object | Current loaded `package.json` object.                                             |
 | packagePath | string | Current loaded `package.json` object path as a Unix styled path.                  |
@@ -87,23 +107,30 @@ console.log(result.formattedMessage);
 ```
 
 ```js
+import { getPackageWithPath } from '@typhonjs-utils/package-json';
+
+// Loads first encountered `package.json` from traversal from current source directory.
+const { packageObj, packagePath } = getPackageWithPath({ filepath: import.meta.url }); 
+```
+
+```js
 import { getPackage } from '@typhonjs-utils/package-json';
 
-// Loads first encountered `package.json` from current source directory.
+// Loads first encountered `package.json` from traversal from current source directory.
 const packageObj = getPackage({ filepath: import.meta.url }); 
 ```
 
 ```js
 import { getPackageType } from '@typhonjs-utils/package-json';
 
-// Type is 'module' or 'commonjs' based on first encountered package.json from current source directory. 
+// Type is 'module' or 'commonjs' based on first encountered package.json from traversal from current source directory. 
 const type = getPackageType({ filepath: import.meta.url }); 
 ```
 
 ```js
 import { getPackage } from '@typhonjs-utils/package-json';
 
-// Loads specific `package.json` with name field matching 'target-package' from current source directory.
+// Loads specific `package.json` with name field matching 'target-package' from traversal from current source directory.
 const packageObj = getPackage({ 
    filepath: import.meta.url, 
    callback: (data) => data.packageObj.name === 'target-package' 
