@@ -159,8 +159,8 @@ export function getPackageWithPath(options)
             if (typeof data.packageObj === 'object')
             {
                // If there is a provided callback then invoke it with the traversal data with paths converted to
-               // unix stype paths. If a truthy value is returned then return the data; otherwise immediately return
-               // the loaded `package.json` object & path.
+               // Unix style paths. If a truthy value is returned then return the data immediately otherwise
+               // the traversal continues.
                if (typeof data.callback === 'function')
                {
                   if (data.callback.call(context, data.toUnixPaths()))
@@ -168,7 +168,7 @@ export function getPackageWithPath(options)
                      return { packageObj: data.packageObj, packagePath: data.packagePath };
                   }
                }
-               else
+               else // If there is no callback function then return results with first found `package.json`.
                {
                   return { packageObj: data.packageObj, packagePath: data.packagePath };
                }
