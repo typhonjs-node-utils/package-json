@@ -1,9 +1,9 @@
-####Corporate Copyright Statements
+### Corporate Copyright Statements
 -----
 
-Copyright (c) 2015-present TyphonRT Inc. [@typhonrt](https://github.com/typhonrt)
+Copyright (c) 2015-present TyphonRT Media Inc. [@typhonrt](https://github.com/typhonrt)
 
-####Contributors
+### Contributors
 -----
 
 Michael Leahy [@typhonrt](https://github.com/typhonrt)
