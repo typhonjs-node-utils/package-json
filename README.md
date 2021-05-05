@@ -137,10 +137,9 @@ const packageObj = getPackage({
 ### `formatPackage` / `getPackageAndFormat` / PackageObjFormatted:
 
 `formatPackage` is useful to normalize essential data found in a loaded `package.json` object. `getPackageAndFormat` 
-will first load a `package.json` object then return the formatted result. The resulting object is guaranteed to have
-these attributes defined and empty strings for any attributes not defined in the given `package.json` object. In 
-TyphonJS modules `formatPackage` is primarily used to print / log a consistent message in error reporting about any 
-offending module.
+will first attempt to load a `package.json` object then return the formatted result. The resulting object is guaranteed 
+to have these properties defined and empty strings for any properties not defined in the given `package.json` object. If 
+`formatPackage` does not receive an object then undefined is returned. 
 
 | Property         | Type   | Description                                                                                                                 |
 | ---------------- | ------ | ------------------------------------------------------------------------- |
@@ -154,6 +153,10 @@ offending module.
 | bugsURL          | string | URL from bugs property.                                                   |
 | bugsEmail        | string | Email from bugs property.                                                 |
 | formattedMessage | string | A consistently formatted message describing the package.                  |
+
+In TyphonJS modules `getPackageAndFormat` is used in combination with
+[@typhonjs-utils/error-parser](https://www.npmjs.com/package/@typhonjs-utils/error-parser) primarily to print / log a
+consistent message in error reporting about any offending module.
 
 ------
 
