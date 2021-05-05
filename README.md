@@ -9,7 +9,8 @@
 [![Dependency Status](https://david-dm.org/typhonjs-node-utils/package-json.svg)](https://david-dm.org/typhonjs-node-utils/package-json)
 
 Provides an ES Module with several utility functions for working with and retrieving `package.json` along with a 
-TyphonJS plugin for `Node.js v12.0+`.
+TyphonJS plugin for `Node.js v12.0+`. All of these functions are synchronous and there is no caching of results between
+queries made. 
 
 ### Why:
 
@@ -39,9 +40,9 @@ There are five functions available as named exports:
 While `formatPackage` accepts a loaded `package.json` object all other functions require a query object containing the 
 following data:
 
-| Attribute  | Type         | Description                                                                                                                           |
+| Property   | Type         | Description                                                                                                                           |
 | ---------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
-| filepath   | string / URL | Initial file or directory path to search for `package.json`.                                                                          | 
+| filepath   | string / URL | Initial file or directory path to traverse for `package.json`.                                                                        | 
 | [basepath] | string / URL | Optional: Base path to stop traversing. Set to the root path of `filepath` if not provided.                                           |
 | [callback] | Function     | Optional: A function that evaluates any loaded package.json object that returns a truthy value that stops or continues the traversal. |
 
@@ -57,17 +58,20 @@ then `commonjs` is assumed by default. To match this behavior `getPackageType` b
 
 ### Traversal callback function / data object:
 
-If a callback function is included in the query object it will be invoked with a TraversalData object as the only
-function parameter. The data available in the traversal object:
+If a callback function is included in the query object it will be invoked with a TraversalData object with all paths
+converted to Unix styled paths as the only function parameter. On Windows any `\` and `\\` path separators are converted
+to `/`. The data available in the traversal object:
 
-| Attribute        | Type   | Description                                                               |
-| ---------------- | ------ | ------------------------------------------------------------------------- |
-| baseDirectory    | string | Stores any base directory defined or the root path.                       | 
-| cntr             | number | Stores the number of times a `package.json` file has been processed.      |
-| currentDirectory | string | Current directory path of traversal.                                      |
-| packageObj       | object | Current loaded `package.json` object.                                     |
-| packagePath      | string | File path of current loaded `package.json` object                         |
-| rootPath         | string | The root path to stop traversal; determined from starting directory path. |
+
+| Property    | Type   | Description                                                                       |
+| ----------- | ------ | --------------------------------------------------------------------------------- |
+| baseDir     | string | Stores the `basepath` directory as a Unix styled path.                            | 
+| cntr        | number | Stores the number of times a package has been processed.                          |
+| currentDir  | string | Current directory of traversal as a Unix styled path.                             |
+| packageObj  | object | Current loaded `package.json` object.                                             |
+| packagePath | string | Current loaded `package.json` object path as a Unix styled path.                  |
+| relativeDir | string | Current directory of traversal as a relative Unix styled path from `process.cwd`. |
+| rootPath    | string | The root path to stop traversal as a Unix styled path.                            |
 
 It should be noted that one should not modify this data and only use it for evaluating whether the currently loaded
 `package.json` object is the target to be returned. 
@@ -113,17 +117,17 @@ these attributes defined and empty strings for any attributes not defined in the
 TyphonJS modules `formatPackage` is primarily used to print / log a consistent message in error reporting about any 
 offending module.
 
-| Attribute        | Type   | Description                                                                                                                 |
+| Property         | Type   | Description                                                                                                                 |
 | ---------------- | ------ | ------------------------------------------------------------------------- |
-| name             | string | Name attribute                                                            | 
-| version          | string | Version attribute                                                         |
+| name             | string | Name property.                                                            | 
+| version          | string | Version property.                                                         |
 | type             | string | `module` or `commonjs` regardless if target package object defines it.    |
-| description      | string | Description attribute.                                                    |
-| homepage         | string | Homepage attribute                                                        |
-| license          | string | License attribute                                                         |
+| description      | string | Description property.                                                     |
+| homepage         | string | Homepage property.                                                        |
+| license          | string | License property.                                                         |
 | repository       | string | The URL or unparsed repository string.                                    |
-| bugsURL          | string | URL from bugs field.                                                      |
-| bugsEmail        | string | Email from bugs field.                                                    |
+| bugsURL          | string | URL from bugs property.                                                   |
+| bugsEmail        | string | Email from bugs property.                                                 |
 | formattedMessage | string | A consistently formatted message describing the package.                  |
 
 ------
