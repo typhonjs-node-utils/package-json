@@ -60,9 +60,10 @@ traversal at the first `package.json` found from a given query.
 
 All functions besides `formatPackage` rely on `getPackageWithPath`. `getPackageWithPath` will not throw on any errors
 encountered and will always return a PackageObjData object. If an error occurs the `error` property will contain the 
-error thrown and `packageObj` and `packagePath` will be undefined. Likewise, if traversal completes without locating 
-a `package.json` object then error will contain a message indicating such. On success both `packageObj` and 
-`packagePath` are defined.
+error thrown and `packageObj` will be undefined and `packagePath` may be defined if the error occurred loading a 
+specific `package.json`. Likewise, if traversal completes without locating `package.json` then error will 
+contain a message indicating this failure. On success both `packageObj` and `packagePath` are defined and error is 
+undefined.
 
 | Property      | Type               | Description                           |
 | ------------- | ------------------ | ------------------------------------- |
