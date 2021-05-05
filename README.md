@@ -60,16 +60,17 @@ traversal at the first `package.json` found from a given query.
 
 All functions besides `formatPackage` rely on `getPackageWithPath`. `getPackageWithPath` will not throw on any errors
 encountered and will always return a PackageObjData object. If an error occurs the `error` property will contain the 
-error thrown and `packageObj` will be undefined and `packagePath` may be defined if the error occurred loading a 
-specific `package.json`. Likewise, if traversal completes without locating `package.json` then error will 
-contain a message indicating this failure. On success both `packageObj` and `packagePath` are defined and error is 
-undefined.
+error thrown and `packageObj` will be undefined and `filepath` / `filepathUnix` may be defined if the error occurred 
+loading a specific `package.json`. Likewise, if traversal completes without locating `package.json` then error will 
+contain a message indicating this failure. On success `packageObj`, `filepath`, and `filepathUnix` are defined and error
+is undefined.
 
-| Property      | Type               | Description                           |
-| ------------- | ------------------ | ------------------------------------- |
-| [packageObj]  | object / undefined | Loaded `package.json` object.         | 
-| [packagePath] | string / undefined | Path of loaded `package.json` object. |
-| [error]       | Error / undefined  | A potential error instance.           |
+| Property       | Type               | Description                                                    |
+| -------------- | ------------------ | -------------------------------------------------------------- |
+| [packageObj]   | object / undefined | Loaded `package.json` object.                                  | 
+| [filepath]     | string / undefined | File path of loaded `package.json` object.                     |
+| [filepathUnix] | string / undefined | File path of loaded `package.json` object as Unix styled path. |
+| [error]        | Error / undefined  | A potential error instance.                                    |
 
 ### `getPackageType`:
 
@@ -90,7 +91,7 @@ to `/`. The data available in the traversal callback object:
 | cntr        | number | Stores the number of times a `package.json` has been processed.                   |
 | currentDir  | string | Current directory of traversal as a Unix styled path.                             |
 | packageObj  | object | Current loaded `package.json` object.                                             |
-| packagePath | string | Current loaded `package.json` object path as a Unix styled path.                  |
+| filepath    | string | Current loaded `package.json` file path as a Unix styled path.                    |
 | relativeDir | string | Current directory of traversal as a relative Unix styled path from `process.cwd`. |
 | rootPath    | string | The root path to stop traversal as a Unix styled path.                            |
 
@@ -108,7 +109,7 @@ console.log(result.formattedMessage);
 import { getPackageWithPath } from '@typhonjs-utils/package-json';
 
 // Loads first encountered `package.json` from traversal from current source directory.
-const { packageObj, packagePath } = getPackageWithPath({ filepath: import.meta.url }); 
+const { packageObj, filepath } = getPackageWithPath({ filepath: import.meta.url }); 
 ```
 
 ```js
