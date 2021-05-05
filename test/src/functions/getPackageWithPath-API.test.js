@@ -70,9 +70,11 @@ if (test.getPackageWithPath_API)
             filepath: './test/fixtures/packages/name/malformed-package-json/test.js'
          });
 
+         const ps = path.sep;
+
          assert.isUndefined(packageObj);
          assert.strictEqual(path.relative(process.cwd(), packagePath),
-          'test/fixtures/packages/name/malformed-package-json/package.json');
+          `test${ps}fixtures${ps}packages${ps}name${ps}malformed-package-json${ps}package.json`);
          assert.strictEqual(error.toString(), `SyntaxError: Unexpected token B in JSON at position 4`);
       });
 
