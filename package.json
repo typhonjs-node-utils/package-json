@@ -1,7 +1,7 @@
 {
   "name": "@typhonjs-utils/package-json",
   "description": "Provides several utility functions for working with and retrieving `package.json`.",
-  "version": "0.0.10",
+  "version": "0.1.0",
   "author": "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)",
   "type": "module",
   "main": "src/functions.js",
@@ -24,7 +24,7 @@
     "/npm-shrinkwrap.json",
     "/src"
   ],
-  "homepage": "https://github.com/typhonjs-node-utils/package-json",
+  "homepage": "https://github.com/typhonjs-node-utils/package-json#readme",
   "keywords": [
     "typhonjs",
     "utils",
