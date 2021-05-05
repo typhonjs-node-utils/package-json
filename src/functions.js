@@ -158,11 +158,12 @@ export function getPackageWithPath(options)
             // If it is a valid object then process it.
             if (typeof data.packageObj === 'object')
             {
-               // If there is a provided callback then invoke it with the traversal data and if a truthy value is
-               // returned then return the data; otherwise immediately return the loaded `package.json` object & path.
-               if (typeof data._callback === 'function')
+               // If there is a provided callback then invoke it with the traversal data with paths converted to
+               // unix stype paths. If a truthy value is returned then return the data; otherwise immediately return
+               // the loaded `package.json` object & path.
+               if (typeof data.callback === 'function')
                {
-                  if (data._callback.call(context, data))
+                  if (data.callback.call(context, data.toUnix()))
                   {
                      return { packageObj: data.packageObj, packagePath: data.packagePath };
                   }

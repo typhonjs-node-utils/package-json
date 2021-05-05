@@ -17,6 +17,14 @@ export default class TraversalData
       this.baseDir = void 0;
 
       /**
+       * Stores the base directory as a unix path.
+       *
+       * @type {string}
+       * @private
+       */
+      this._baseDirUnix = void 0;
+
+      /**
        * Stores the number of times a package is processed; useful in callbacks.
        *
        * @type {number}
@@ -52,12 +60,19 @@ export default class TraversalData
       this.rootPath = void 0;
 
       /**
-       * Stores a callback function.
+       * Stores the root path as a unix path.
        *
-       * @type {Function}
+       * @type {string}
        * @private
        */
-      this._callback = void 0;
+      this._rootPathUnix = void 0;
+
+      /**
+       * Stores the traversal callback function.
+       *
+       * @type {Function}
+       */
+      this.callback = void 0;
    }
 
    /**
@@ -129,8 +144,42 @@ export default class TraversalData
       // Ensure we track the root of the current directory path to stop iteration.
       data.rootPath = path.parse(data.currentDir).root;
 
-      data._callback = callback;
+      // Store unix path conversion of base and root paths.
+      data._baseDirUnix = s_TO_UNIX_PATH(data.baseDir);
+      data._rootPathUnix = s_TO_UNIX_PATH(data.rootPath);
+
+      data.callback = callback;
 
       return data;
    }
+
+   /**
+    * Converts the current state of TraversalData to unix paths to pass to any traversal callback defined.
+    *
+    * @returns {TraversalDataObj} The data object to pass to any traversal callback defined.
+    */
+   toUnix()
+   {
+      return {
+         baseDir: this._baseDirUnix,
+         cntr: this.cntr,
+         currentDir: s_TO_UNIX_PATH(this.currentDir),
+         packageObj: this.packageObj,
+         packagePath: s_TO_UNIX_PATH(this.packagePath),
+         relativeDir: s_TO_UNIX_PATH(path.relative(process.cwd(), this.currentDir)),
+         rootPath: this._rootPathUnix
+      };
+   }
+}
+
+/**
+ * Convert a file / dir path to a Unix styled path.
+ *
+ * @param {string} p - A file / dir path.
+ *
+ * @returns {string} Unix styled path; on Windows swap `\` and `\\` for `/`.
+ */
+function s_TO_UNIX_PATH(p)
+{
+   return p.replace(/\\/g, '/').replace(/(?<!^)\/+/g, '/');
 }
