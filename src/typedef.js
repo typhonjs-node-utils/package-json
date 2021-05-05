@@ -3,10 +3,10 @@
  *
  * @typedef {object} PackageObjData
  *
- * @property {object|undefined}  packageObj - Loaded `package.json` object.
- * @property {string|undefined}  filepath - File path of loaded `package.json` object.
- * @property {string|undefined}  filepathUnix - File path of loaded `package.json` object as Unix styled path.
- * @property {Error|undefined}   error - A potential error instance.
+ * @property {object|undefined}  [packageObj] - Loaded `package.json` object.
+ * @property {string|undefined}  [filepath] - File path of loaded `package.json` object.
+ * @property {string|undefined}  [filepathUnix] - File path of loaded `package.json` object as Unix styled path.
+ * @property {Error|undefined}   [error] - A potential error instance.
  */
 
 /**
@@ -36,8 +36,20 @@
  * @property {string|URL}  [basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
  *                                      provided.
  *
- * @property {Function}    [callback] - A function that evaluates any loaded package.json object that returns a truthy
- *                                      value that stops or continues the traversal.
+ * @property {TraversalCallback}  [callback] - A function that evaluates a loaded package.json object and associated
+ *                                            traversal data returning a truthy value to stops or continue the
+ *                                            traversal.
+ */
+
+/**
+ * An optional callback function for {@link PackageQueryOptions} that evaluates a loaded package.json object and
+ * associated traversal data returning a truthy value to stops or continue the traversal.
+ *
+ * @callback TraversalCallback
+ *
+ * @param {TraversalDataObj} data - The traversal data object.
+ *
+ * @returns {boolean} True to stop traversal / false to continue.
  */
 
 /**
