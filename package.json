@@ -20,6 +20,7 @@
   "engines": {
     "node": ">=12"
   },
+  "types": "./types/functions.d.ts",
   "files": [
     "/npm-shrinkwrap.json",
     "/src"
@@ -41,6 +42,7 @@
     "posttest": "npm run eslint",
     "prepublishOnly": "npm run test",
     "test": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/**/*.test.js\"",
-    "test-functions": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/functions/**/*.test.js\""
+    "test-functions": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/functions/**/*.test.js\"",
+    "types": "npx -p typescript tsc ./src/functions.js ./src/typedef.js --noResolve --declaration --allowJs --emitDeclarationOnly --outFile ./types/functions.d.ts"
   }
 }
