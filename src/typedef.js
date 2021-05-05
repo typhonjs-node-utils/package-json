@@ -13,15 +13,15 @@
  *
  * @typedef {object} PackageObjFormatted
  *
- * @property {string}   name - Name field.
- * @property {string}   version - Version field.
+ * @property {string}   name - Name attribute.
+ * @property {string}   version - Version attribute.
  * @property {string}   type - `module` or `commonjs`.
- * @property {string}   description - Description field.
- * @property {string}   homepage - Homepage field.
- * @property {string}   license - License field.
+ * @property {string}   description - Description attribute.
+ * @property {string}   homepage - Homepage attribute.
+ * @property {string}   license - License attribute.
  * @property {string}   repository - The repository URL or unparsed repository string.
- * @property {string}   bugsURL - URL from bugs field.
- * @property {string}   bugsEmail - Email from bugs field.
+ * @property {string}   bugsURL - URL from bugs attribute.
+ * @property {string}   bugsEmail - Email from bugs attribute.
  * @property {string}   formattedMessage - A formatted message describing the package.
  */
 
