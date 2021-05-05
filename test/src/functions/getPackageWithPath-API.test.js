@@ -2,11 +2,11 @@ import path                from 'path';
 
 import { assert }          from 'chai';
 
-import { getPackagePath }  from '../../../src/functions.js';
+import { getPackageWithPath }  from '../../../src/functions.js';
 
 import test                from '../../util/test.js';
 
-if (test.getPackagePath_API)
+if (test.getPackageWithPath_API)
 {
    /**
     * Tests all of the API errors regarding invoking better errors as an external consumer.
@@ -15,7 +15,7 @@ if (test.getPackagePath_API)
    {
       it(`bad options`, () =>
       {
-         const { packageObj, packagePath, error } = getPackagePath(false);
+         const { packageObj, packagePath, error } = getPackageWithPath(false);
 
          assert.strictEqual(packageObj, void 0);
          assert.strictEqual(packagePath, void 0);
@@ -24,7 +24,7 @@ if (test.getPackagePath_API)
 
       it(`bad filepath`, () =>
       {
-         const { packageObj, packagePath, error } = getPackagePath({ filepath: false });
+         const { packageObj, packagePath, error } = getPackageWithPath({ filepath: false });
 
          assert.strictEqual(packageObj, void 0);
          assert.strictEqual(packagePath, void 0);
@@ -33,7 +33,7 @@ if (test.getPackagePath_API)
 
       it(`bad basepath`, () =>
       {
-         const { packageObj, packagePath, error } = getPackagePath({ filepath: '.', basepath: false });
+         const { packageObj, packagePath, error } = getPackageWithPath({ filepath: '.', basepath: false });
 
          assert.strictEqual(packageObj, void 0);
          assert.strictEqual(packagePath, void 0);
@@ -42,7 +42,11 @@ if (test.getPackagePath_API)
 
       it(`bad callback`, () =>
       {
-         const { packageObj, packagePath, error } = getPackagePath({ filepath: '.', basepath: '.', callback: false });
+         const { packageObj, packagePath, error } = getPackageWithPath({
+            filepath: '.',
+            basepath: '.',
+            callback: false
+         });
 
          assert.strictEqual(packageObj, void 0);
          assert.strictEqual(packagePath, void 0);
@@ -53,7 +57,7 @@ if (test.getPackagePath_API)
       {
          const rootPath = path.parse(path.resolve('.')).root;
 
-         const { packageObj, packagePath, error } = getPackagePath({ filepath: rootPath });
+         const { packageObj, packagePath, error } = getPackageWithPath({ filepath: rootPath });
 
          assert.strictEqual(packageObj, void 0);
          assert.strictEqual(packagePath, void 0);
@@ -62,7 +66,7 @@ if (test.getPackagePath_API)
 
       it(`filepath as http URL`, () =>
       {
-         const { packageObj, packagePath, error } = getPackagePath({ filepath: new URL('http://www.bad.com/') });
+         const { packageObj, packagePath, error } = getPackageWithPath({ filepath: new URL('http://www.bad.com/') });
 
          assert.strictEqual(packageObj, void 0);
          assert.strictEqual(packagePath, void 0);
@@ -71,7 +75,7 @@ if (test.getPackagePath_API)
 
       it(`basepath as http URL`, () =>
       {
-         const { packageObj, packagePath, error } = getPackagePath({
+         const { packageObj, packagePath, error } = getPackageWithPath({
             filepath: './test',
             basepath: new URL('http://www.bad.com/')
          });

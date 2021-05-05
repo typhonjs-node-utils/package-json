@@ -84,14 +84,14 @@ export function formatPackage(packageObj = {})
  * Note: If malformed data is presented the result will undefined. Also note that a file may be specified that
  * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
  *
- * @param {PackageOptions} options - The package options.
+ * @param {PackageQueryOptions} options - The package query options.
  *
  * @returns {object|undefined} Loaded `package.json` or undefined if an error has occurred or basepath or root
  *                             directory has been reached.
  */
 export function getPackage(options)
 {
-   const result = getPackagePath(options);
+   const result = getPackageWithPath(options);
 
    return typeof result.packageObj === 'object' ? result.packageObj : void 0;
 }
@@ -103,7 +103,7 @@ export function getPackage(options)
  * Note: If malformed data is presented the result will undefined. Also note that a file may be specified that
  * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
  *
- * @param {PackageOptions} options - The package options.
+ * @param {PackageQueryOptions} options - The package query options.
  *
  * @returns {object} Formatted package.json or empty object if an error has occurred.
  */
@@ -119,11 +119,11 @@ export function getPackageAndFormat(options)
  * object / `PackageObjData`. Also note that a file may be specified that does not exist and the directory will be
  * resolved. If that directory exists then resolution will continue.
  *
- * @param {PackageOptions} options - The package options.
+ * @param {PackageQueryOptions} options - The package query options.
  *
  * @returns {PackageObjData} Loaded package.json / path or potentially an error.
  */
-export function getPackagePath(options)
+export function getPackageWithPath(options)
 {
    const isTraversalData = options instanceof TraversalData;
 
@@ -198,13 +198,13 @@ export function getPackagePath(options)
  * Traversal stops at the first valid `package.json` file as this is how Node works. If the first found `package.json`
  * does not have a `type` field then `commonjs` is returned.
  *
- * @param {PackageOptions} options - The package options.
+ * @param {PackageQueryOptions} options - The package query options.
  *
  * @returns {string} Type of package - 'module' for ESM otherwise 'commonjs'.
  */
 export function getPackageType(options)
 {
-   const result = getPackagePath(options);
+   const result = getPackageWithPath(options);
 
    return typeof result.packageObj === 'object' ?
     result.packageObj.type === 'module' ? 'module' : 'commonjs' : 'commonjs';

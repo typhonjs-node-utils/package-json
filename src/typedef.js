@@ -27,7 +27,7 @@
 /**
  * Defines the data object passed to the functions to perform a `package.json` query.
  *
- * @typedef {object} PackageOptions
+ * @typedef {object} PackageQueryOptions
  *
  * @property {string|URL}  filepath - Initial file or directory path to search for `package.json`.
  *

@@ -8,10 +8,10 @@ export default {
    getPackage_name_API: true,
    getPackage_name_URL: true,
    getPackageAndFormat: true,
-   getPackagePath: true,
-   getPackagePath_API: true,
    getPackageType: true,
    getPackageType_API: true,
    getPackageType_Full_Traverse: true,
+   getPackageWithPath: true,
+   getPackageWithPath_API: true,
    plugin: true
 };
