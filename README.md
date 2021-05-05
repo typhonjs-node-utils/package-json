@@ -123,7 +123,7 @@ offending module.
 | license          | string | License attribute                                                         |
 | repository       | string | The URL or unparsed repository string.                                    |
 | bugsURL          | string | URL from bugs field.                                                      |
-| bugsEmail        | object | Email from bugs field.                                                    |
+| bugsEmail        | string | Email from bugs field.                                                    |
 | formattedMessage | string | A consistently formatted message describing the package.                  |
 
 ------
