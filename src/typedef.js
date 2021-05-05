@@ -1,5 +1,5 @@
 /**
- * The returned data object from a `getPackagePath` query.
+ * The returned data object from a `getPackageWithPath` query.
  *
  * @typedef {object} PackageObjData
  *
@@ -13,15 +13,15 @@
  *
  * @typedef {object} PackageObjFormatted
  *
- * @property {string}   name - Name attribute.
- * @property {string}   version - Version attribute.
+ * @property {string}   name - Name property.
+ * @property {string}   version - Version property.
  * @property {string}   type - `module` or `commonjs`.
- * @property {string}   description - Description attribute.
- * @property {string}   homepage - Homepage attribute.
- * @property {string}   license - License attribute.
+ * @property {string}   description - Description property.
+ * @property {string}   homepage - Homepage property.
+ * @property {string}   license - License property.
  * @property {string}   repository - The repository URL or unparsed repository string.
- * @property {string}   bugsURL - URL from bugs attribute.
- * @property {string}   bugsEmail - Email from bugs attribute.
+ * @property {string}   bugsURL - URL from bugs property.
+ * @property {string}   bugsEmail - Email from bugs property.
  * @property {string}   formattedMessage - A formatted message describing the package.
  */
 
@@ -46,7 +46,7 @@
  * @typedef {object} TraversalDataObj
  *
  * @property {string}   baseDir - Stores the `basepath` directory as a Unix styled path.
- * @property {number}   cntr - Stores the number of times a package has been processed.
+ * @property {number}   cntr - Stores the number of times a `package.json` has been processed.
  * @property {string}   currentDir - Current directory of traversal as a Unix styled path.
  * @property {object}   packageObj - Current loaded `package.json` object.
  * @property {string}   packagePath - Current loaded `package.json` object path as a Unix styled path.
