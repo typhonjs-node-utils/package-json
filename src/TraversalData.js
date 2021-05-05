@@ -145,12 +145,24 @@ export default class TraversalData
       data.rootPath = path.parse(data.currentDir).root;
 
       // Store unix path conversion of base and root paths.
-      data._baseDirUnix = s_TO_UNIX_PATH(data.baseDir);
-      data._rootPathUnix = s_TO_UNIX_PATH(data.rootPath);
+      data._baseDirUnix = TraversalData.toUnixPath(data.baseDir);
+      data._rootPathUnix = TraversalData.toUnixPath(data.rootPath);
 
       data.callback = callback;
 
       return data;
+   }
+
+   /**
+    * Convert a file / dir path to a Unix styled path.
+    *
+    * @param {string} p - A file / dir path.
+    *
+    * @returns {string|undefined} Unix styled path; on Windows swap `\` and `\\` for `/`.
+    */
+   static toUnixPath(p)
+   {
+      return typeof p === 'string' ? p.replace(/\\/g, '/').replace(/(?<!^)\/+/g, '/') : void 0;
    }
 
    /**
@@ -164,23 +176,11 @@ export default class TraversalData
       return {
          baseDir: this._baseDirUnix,
          cntr: this.cntr,
-         currentDir: s_TO_UNIX_PATH(this.currentDir),
+         currentDir: TraversalData.toUnixPath(this.currentDir),
          packageObj: this.packageObj,
-         packagePath: s_TO_UNIX_PATH(this.packagePath),
-         relativeDir: s_TO_UNIX_PATH(path.relative(process.cwd(), this.currentDir)),
+         packagePath: TraversalData.toUnixPath(this.packagePath),
+         relativeDir: TraversalData.toUnixPath(path.relative(process.cwd(), this.currentDir)),
          rootPath: this._rootPathUnix
       };
    }
-}
-
-/**
- * Convert a file / dir path to a Unix styled path.
- *
- * @param {string} p - A file / dir path.
- *
- * @returns {string} Unix styled path; on Windows swap `\` and `\\` for `/`.
- */
-function s_TO_UNIX_PATH(p)
-{
-   return p.replace(/\\/g, '/').replace(/(?<!^)\/+/g, '/');
 }

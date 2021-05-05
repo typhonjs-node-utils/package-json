@@ -5,6 +5,7 @@
  *
  * @property {object|undefined}  packageObj - Loaded `package.json` object.
  * @property {string|undefined}  packagePath - Path of loaded `package.json` object.
+ * @property {string|undefined}  packagePathUnix - Path of loaded `package.json` object as Unix styled path.
  * @property {Error|undefined}   error - An error instance.
  */
 
