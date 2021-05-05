@@ -27,7 +27,7 @@ optional callback function that is invoked during traversal of the file system a
 
 There are five functions available as named exports:
 
-| name                | description                                                     |
+| Function Name       | Description                                                     |
 | ------------------- | --------------------------------------------------------------- |
 | formatPackage       | Accepts a loaded package object and normalizes the data.        | 
 | getPackage          | Retrieves the package object specified by the query.            |
@@ -39,7 +39,7 @@ There are five functions available as named exports:
 While `formatPackage` accepts a loaded `package.json` object all other functions require a query object containing the 
 following data:
 
-| name       | type         | description                                                                                                                           |
+| Attribute  | Type         | Description                                                                                                                           |
 | ---------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
 | filepath   | string / URL | Initial file or directory path to search for `package.json`.                                                                          | 
 | [basepath] | string / URL | Optional: Base path to stop traversing. Set to the root path of `filepath` if not provided.                                           |
@@ -60,7 +60,7 @@ then `commonjs` is assumed by default. To match this behavior `getPackageType` b
 If a callback function is included in the query object it will be invoked with a TraversalData object as the only
 function parameter. The data available in the traversal object:
 
-| name             | type   | description                                                               |
+| Attribute        | Type   | Description                                                               |
 | ---------------- | ------ | ------------------------------------------------------------------------- |
 | baseDirectory    | string | Stores any base directory defined or the root path.                       | 
 | cntr             | number | Stores the number of times a `package.json` file has been processed.      |
@@ -105,26 +105,26 @@ const packageObj = getPackage({
    callback: (data) => data.packageObj.name === 'target-package' 
 });
 ```
-### formatPackage / getPackageAndFormat / PackageObjFormatted:
+### `formatPackage` / `getPackageAndFormat` / PackageObjFormatted:
 
 `formatPackage` is useful to normalize essential data found in a loaded `package.json` object. `getPackageAndFormat` 
 will first load a `package.json` object then return the formatted result. The resulting object is guaranteed to have
-these fields defined and empty strings for any fields not defined in the given `package.json` object. In TyphonJS
-modules `formatPackage` is primarily used to print a consistent message in error reporting about any offending module.
+these attributes defined and empty strings for any attributes not defined in the given `package.json` object. In 
+TyphonJS modules `formatPackage` is primarily used to print / log a consistent message in error reporting about any 
+offending module.
 
-| name             | type   | description                                                                                                                 |
+| Attribute        | Type   | Description                                                                                                                 |
 | ---------------- | ------ | ------------------------------------------------------------------------- |
-| name             | string | Name field                                                                | 
-| version          | string | Version field                                                             |
+| name             | string | Name attribute                                                            | 
+| version          | string | Version attribute                                                         |
 | type             | string | `module` or `commonjs` regardless if target package object defines it.    |
-| description      | string | Description field.                                                        |
-| homepage         | string | Homepage field                                                            |
-| license          | string | License field                                                             |
+| description      | string | Description attribute.                                                    |
+| homepage         | string | Homepage attribute                                                        |
+| license          | string | License attribute                                                         |
 | repository       | string | The URL or unparsed repository string.                                    |
 | bugsURL          | string | URL from bugs field.                                                      |
 | bugsEmail        | object | Email from bugs field.                                                    |
 | formattedMessage | string | A consistently formatted message describing the package.                  |
-
 
 ------
 
@@ -136,13 +136,15 @@ For Node v12.17+ there is a specific export for the TyphonJS plugin via the expo
 This plugin works with [@typhonjs-plugin/manager](https://www.npmjs.com/package/@typhonjs-plugin/manager) and simply 
 registers the functions above on the plugin manager eventbus under the following event names:
 
-- 'typhonjs:utils:package:json:format' - formatPackage
-- 'typhonjs:utils:package:json:format:get' - getPackageAndFormat
-- 'typhonjs:utils:package:json:get' - getPackage
-- 'typhonjs:utils:package:json:path:get' - getPackageWithPath
-- 'typhonjs:utils:package:json:type:get' - getPackageType
+| Event Name                               | Function Invoked    |
+| ---------------------------------------- | ------------------- |
+| `typhonjs:utils:package:json:format`     | formatPackage       | 
+| `typhonjs:utils:package:json:format:get` | getPackageAndFormat |
+| `typhonjs:utils:package:json:get`        | getPackage          |
+| `typhonjs:utils:package:json:path:get`   | getPackageWithPath  |
+| `typhonjs:utils:package:json:type:get`   | getPackageType      |
 
-An abbreviated example of loading and using the plugin follows:
+An abbreviated pseudocode example of loading and using the plugin follows:
 ```js
 import PluginManager from '@typhonjs-plugin/manager';
 
