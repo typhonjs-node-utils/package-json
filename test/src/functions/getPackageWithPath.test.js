@@ -20,8 +20,10 @@ if (test.getPackageWithPath)
 
       it('with callback function', () =>
       {
-         const data = getPackageWithPath({ filepath: './test/fixtures/packages/name/name-missing',
-          callback: (data) => typeof data.packageObj.name === 'string' });
+         const data = getPackageWithPath({
+            filepath: './test/fixtures/packages/name/name-missing',
+            callback: (data) => typeof data.packageObj.name === 'string'
+         });
 
          assert.strictEqual(data.packageObj.name, 'base');
          assert.strictEqual(data.packagePath,

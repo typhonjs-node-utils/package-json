@@ -14,7 +14,7 @@ export default class TraversalData
        *
        * @type {string}
        */
-      this.baseDirectory = void 0;
+      this.baseDir = void 0;
 
       /**
        * Stores the number of times a package is processed; useful in callbacks.
@@ -28,7 +28,7 @@ export default class TraversalData
        *
        * @type {string}
        */
-      this.currentDirectory = void 0;
+      this.currentDir = void 0;
 
       /**
        * Current loaded `package.json` object.
@@ -107,27 +107,27 @@ export default class TraversalData
       }
 
       // Handle `filepath` as a directory or get directory of path with file name.
-      data.currentDirectory = fs.existsSync(filepath) && fs.lstatSync(filepath).isDirectory() ?
+      data.currentDir = fs.existsSync(filepath) && fs.lstatSync(filepath).isDirectory() ?
        path.resolve(filepath) : path.resolve(path.dirname(filepath));
 
       // Convert basepath to root of resolved file path if not a string.
       if (typeof basepath !== 'string')
       {
-         basepath = path.parse(data.currentDirectory).root;
+         basepath = path.parse(data.currentDir).root;
       }
 
       // Handle `basepath` as a directory or convert a path with file name to a directory.
-      data.baseDirectory = fs.existsSync(basepath) && fs.lstatSync(basepath).isDirectory() ? path.resolve(basepath) :
+      data.baseDir = fs.existsSync(basepath) && fs.lstatSync(basepath).isDirectory() ? path.resolve(basepath) :
        path.resolve(path.dirname(basepath));
 
       // If the resolved paths do not exist then return null.
-      if (!fs.existsSync(data.baseDirectory) || !fs.existsSync(data.currentDirectory))
+      if (!fs.existsSync(data.baseDir) || !fs.existsSync(data.currentDir))
       {
          throw new Error(`Could not resolve 'filepath' or 'basepath'`);
       }
 
       // Ensure we track the root of the current directory path to stop iteration.
-      data.rootPath = path.parse(data.currentDirectory).root;
+      data.rootPath = path.parse(data.currentDir).root;
 
       data._callback = callback;
 

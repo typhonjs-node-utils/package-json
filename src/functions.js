@@ -148,7 +148,7 @@ export function getPackageWithPath(options)
 
       do
       {
-         data.packagePath = path.resolve(data.currentDirectory, 'package.json');
+         data.packagePath = path.resolve(data.currentDir, 'package.json');
 
          // If there is a `package.json` path attempt to load it.
          if (fs.existsSync(data.packagePath))
@@ -177,10 +177,10 @@ export function getPackageWithPath(options)
          }
 
          // If the current directory equals the base directory then stop traversal.
-         if (data.currentDirectory === data.baseDirectory) { break; }
+         if (data.currentDir === data.baseDir) { break; }
 
       // If the current directory equals the root path then stop traversal.
-      } while ((data.currentDirectory = path.dirname(data.currentDirectory)) !== data.rootPath);
+      } while ((data.currentDir = path.dirname(data.currentDir)) !== data.rootPath);
    }
    catch (error)
    {
