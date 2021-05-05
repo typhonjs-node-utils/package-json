@@ -154,9 +154,10 @@ export default class TraversalData
    }
 
    /**
-    * Converts the current state of TraversalData to unix paths to pass to any traversal callback defined.
+    * Converts the current state of TraversalData to Unix styled paths to pass to any traversal callback
+    * function defined.
     *
-    * @returns {TraversalDataObj} The data object to pass to any traversal callback defined.
+    * @returns {TraversalDataObj} The data object to pass to any traversal callback function defined.
     */
    toUnixPaths()
    {
