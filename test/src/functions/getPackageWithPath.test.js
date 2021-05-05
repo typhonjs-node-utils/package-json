@@ -9,7 +9,7 @@ import test                   from '../../util/test.js';
 
 if (test.getPackageWithPath)
 {
-   describe(`getPackagePath`, () =>
+   describe(`getPackageWithPath:`, () =>
    {
       it('module package.json', () =>
       {

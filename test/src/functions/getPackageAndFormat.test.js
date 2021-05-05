@@ -8,7 +8,7 @@ import verifyFormatted           from '../../util/verifyFormatted.js';
 
 if (test.getPackageAndFormat)
 {
-   describe('getPackageAndFormat', () =>
+   describe('getPackageAndFormat:', () =>
    {
       it('module package.json:', () =>
       {

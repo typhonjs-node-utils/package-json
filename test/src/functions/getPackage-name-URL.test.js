@@ -9,7 +9,7 @@ import test             from '../../util/test.js';
 
 if (test.getPackage_name_URL)
 {
-   describe(`getPackage as file URL string`, () =>
+   describe(`getPackage as file URL string:`, () =>
    {
       it(`name-good w/ filepath as URL`, () =>
       {
@@ -33,7 +33,7 @@ if (test.getPackage_name_URL)
             filepath: './test/fixtures/packages/name/no-package-json',
             basepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json/')).toString()
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`no-package-json (directory) w/ filepath & basepath as URL`, () =>
@@ -42,7 +42,7 @@ if (test.getPackage_name_URL)
             filepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json')).toString(),
             basepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json')).toString()
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`no-package-json w/ filepath & basepath as URL`, () =>
@@ -51,7 +51,7 @@ if (test.getPackage_name_URL)
             filepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json')).toString(),
             basepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json/')).toString()
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`no-package-json (directory) w/ basepath as URL`, () =>
@@ -60,7 +60,7 @@ if (test.getPackage_name_URL)
             filepath: './test/fixtures/packages/name/no-package-json',
             basepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json')).toString()
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
    });
 
@@ -88,7 +88,7 @@ if (test.getPackage_name_URL)
             filepath: './test/fixtures/packages/name/no-package-json',
             basepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json/'))
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`no-package-json (directory) w/ filepath & basepath as URL`, () =>
@@ -97,7 +97,7 @@ if (test.getPackage_name_URL)
             filepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json')),
             basepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json'))
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`no-package-json w/ filepath & basepath as URL`, () =>
@@ -106,7 +106,7 @@ if (test.getPackage_name_URL)
             filepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json')),
             basepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json/'))
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`no-package-json (directory) w/ filepath - basepath as URL`, () =>
@@ -115,7 +115,7 @@ if (test.getPackage_name_URL)
             filepath: './test/fixtures/packages/name/no-package-json',
             basepath: url.pathToFileURL(path.resolve('./test/fixtures/packages/name/no-package-json'))
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
    });
 }

@@ -28,11 +28,11 @@ if (test.getPackageType_Full_Traverse)
    /**
     * Test all checks defined above.
     */
-   describe(`getPackageType - basedir set - full traversal`, () =>
+   describe(`getPackageType - basepath set - make sure traversal stops early:`, () =>
    {
       for (const directory of Object.keys(checks))
       {
-         describe(`getPackageType (${directory})`, () =>
+         describe(`getPackageType (${directory}):`, () =>
          {
             for (const [filepath, type] of Object.entries(checks[directory]))
             {

@@ -8,6 +8,7 @@ export default {
    getPackage_name_API: true,
    getPackage_name_URL: true,
    getPackageAndFormat: true,
+   getPackageAndFormat_API: true,
    getPackageType: true,
    getPackageType_API: true,
    getPackageType_Full_Traverse: true,

@@ -11,14 +11,14 @@ if (test.getPackageWithPath_API)
    /**
     * Tests all of the API errors regarding invoking better errors as an external consumer.
     */
-   describe(`getPackagePath - destructure bad data`, () =>
+   describe(`getPackageWithPath - API Errors:`, () =>
    {
       it(`bad options`, () =>
       {
          const { packageObj, packagePath, error } = getPackageWithPath(false);
 
-         assert.strictEqual(packageObj, void 0);
-         assert.strictEqual(packagePath, void 0);
+         assert.isUndefined(packageObj);
+         assert.isUndefined(packagePath);
          assert.strictEqual(error.toString(), `TypeError: 'options' is not an object`);
       });
 
@@ -26,8 +26,8 @@ if (test.getPackageWithPath_API)
       {
          const { packageObj, packagePath, error } = getPackageWithPath({ filepath: false });
 
-         assert.strictEqual(packageObj, void 0);
-         assert.strictEqual(packagePath, void 0);
+         assert.isUndefined(packageObj);
+         assert.isUndefined(packagePath);
          assert.strictEqual(error.toString(), `TypeError: 'filepath' is not a string or file URL`);
       });
 
@@ -35,8 +35,8 @@ if (test.getPackageWithPath_API)
       {
          const { packageObj, packagePath, error } = getPackageWithPath({ filepath: '.', basepath: false });
 
-         assert.strictEqual(packageObj, void 0);
-         assert.strictEqual(packagePath, void 0);
+         assert.isUndefined(packageObj);
+         assert.isUndefined(packagePath);
          assert.strictEqual(error.toString(), `TypeError: 'basepath' is not a string or file URL`);
       });
 
@@ -48,8 +48,8 @@ if (test.getPackageWithPath_API)
             callback: false
          });
 
-         assert.strictEqual(packageObj, void 0);
-         assert.strictEqual(packagePath, void 0);
+         assert.isUndefined(packageObj);
+         assert.isUndefined(packagePath);
          assert.strictEqual(error.toString(), `TypeError: 'callback' is not a function`);
       });
 
@@ -59,17 +59,29 @@ if (test.getPackageWithPath_API)
 
          const { packageObj, packagePath, error } = getPackageWithPath({ filepath: rootPath });
 
-         assert.strictEqual(packageObj, void 0);
-         assert.strictEqual(packagePath, void 0);
+         assert.isUndefined(packageObj);
+         assert.isUndefined(packagePath);
          assert.strictEqual(error.toString(), `Error: No 'package.json' located`);
+      });
+
+      it(`malformed package.json - packagePath defined`, () =>
+      {
+         const { packageObj, packagePath, error } = getPackageWithPath({
+            filepath: './test/fixtures/packages/name/malformed-package-json/test.js'
+         });
+
+         assert.isUndefined(packageObj);
+         assert.strictEqual(path.relative(process.cwd(), packagePath),
+          'test/fixtures/packages/name/malformed-package-json/package.json');
+         assert.strictEqual(error.toString(), `SyntaxError: Unexpected token B in JSON at position 4`);
       });
 
       it(`filepath as http URL`, () =>
       {
          const { packageObj, packagePath, error } = getPackageWithPath({ filepath: new URL('http://www.bad.com/') });
 
-         assert.strictEqual(packageObj, void 0);
-         assert.strictEqual(packagePath, void 0);
+         assert.isUndefined(packageObj);
+         assert.isUndefined(packagePath);
          assert.strictEqual(error.toString(), `TypeError [ERR_INVALID_URL_SCHEME]: The URL must be of scheme file`);
       });
 
@@ -80,8 +92,8 @@ if (test.getPackageWithPath_API)
             basepath: new URL('http://www.bad.com/')
          });
 
-         assert.strictEqual(packageObj, void 0);
-         assert.strictEqual(packagePath, void 0);
+         assert.isUndefined(packageObj);
+         assert.isUndefined(packagePath);
          assert.strictEqual(error.toString(), `TypeError [ERR_INVALID_URL_SCHEME]: The URL must be of scheme file`);
       });
    });

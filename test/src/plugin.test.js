@@ -9,7 +9,7 @@ import test                from '../util/test.js';
 // PluginManager requires Node 12.2+ so it is separated from the functions tests.
 if (test.plugin)
 {
-   describe(`PluginManager`, () =>
+   describe(`PluginManager:`, () =>
    {
       it('plugin / getPackagePath', async () =>
       {

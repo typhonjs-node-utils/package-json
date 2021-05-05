@@ -22,13 +22,20 @@ if (test.formatPackage_API)
    /**
     * Pass bad data to formatPackage.
     */
-   describe('formatPackage API', () =>
+   describe('formatPackage API Error:', () =>
    {
+      it('package object undefined', () =>
+      {
+         const result = formatPackage();
+
+         assert.isUndefined(result);
+      });
+
       it('package object not an object', () =>
       {
          const result = formatPackage(false);
 
-         assert.deepEqual(result, s_EMPTY_FORMATTED);
+         assert.isUndefined(result);
       });
 
       it('package object bugs email not a string', () =>

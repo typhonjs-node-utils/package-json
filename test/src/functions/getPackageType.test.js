@@ -32,11 +32,11 @@ if (test.getPackageType)
    /**
     * Test all checks defined above.
     */
-   describe(`getPackageType (all checks)`, () =>
+   describe(`getPackageType (all checks):`, () =>
    {
       for (const directory of Object.keys(checks))
       {
-         describe(`getPackageType (${directory})`, () =>
+         describe(`getPackageType (${directory}):`, () =>
          {
             for (const [filepath, type] of Object.entries(checks[directory]))
             {

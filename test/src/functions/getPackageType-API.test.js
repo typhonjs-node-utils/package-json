@@ -9,9 +9,16 @@ if (test.getPackageType_API)
    /**
     * Test bad data input.
     */
-   describe(`getPackageType - API error / bad data`, () =>
+   describe(`getPackageType - bad data:`, () =>
    {
-      it(`test `, () =>
+      it(`no package query object `, () =>
+      {
+         const result = getPackageType();
+
+         assert.strictEqual(result, 'commonjs');
+      });
+
+      it(`non-existent directory `, () =>
       {
          const result = getPackageType({
             filepath: './test/fixtures/packages/type/type-module/subdir/'

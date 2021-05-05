@@ -9,9 +9,9 @@ import verifyFormatted     from '../../util/verifyFormatted.js';
 
 if (test.formatPackage)
 {
-   describe('formatPackage', () =>
+   describe('formatPackage:', () =>
    {
-      it('getPackage / format:', () =>
+      it('getPackage / format', () =>
       {
          const packageObj = getPackage({ filepath: import.meta.url });
          const data = formatPackage(packageObj);
@@ -19,7 +19,7 @@ if (test.formatPackage)
          assert.deepEqual(data, verifyFormatted(data.version));
       });
 
-      it('formatPackage - bugs:', () =>
+      it('formatPackage - bugs', () =>
       {
          const data = formatPackage({ bugs: 'test' });
 
@@ -37,7 +37,7 @@ if (test.formatPackage)
          });
       });
 
-      it('formatPackage - repository.url:', () =>
+      it('formatPackage - repository.url', () =>
       {
          const data = formatPackage({ repository: { url: 'test' } });
 
@@ -73,7 +73,7 @@ if (test.formatPackage)
          });
       });
 
-      it('formatPackage - name no version:', () =>
+      it('formatPackage - name no version', () =>
       {
          const data = formatPackage({ name: 'a-name' });
 

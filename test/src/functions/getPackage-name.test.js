@@ -11,18 +11,18 @@ if (test.getPackage_name)
    /**
     * Tests all of the API errors regarding invoking better errors as an external consumer.
     */
-   describe(`getPackage`, () =>
+   describe(`getPackage:`, () =>
    {
       it(`malformed-package`, () =>
       {
          const result = getPackage({ filepath: './test/fixtures/packages/name/malformed-package-json/test.js' });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`malformed-package (directory)`, () =>
       {
          const result = getPackage({ filepath: './test/fixtures/packages/name/malformed-package-json' });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`name-good`, () =>
@@ -52,14 +52,14 @@ if (test.getPackage_name)
       it(`name-parent->child->missing`, () =>
       {
          const result = getPackage(
-            { filepath: './test/fixtures/packages/name/name-parent/name-child/no-package-json/test.js' });
+          { filepath: './test/fixtures/packages/name/name-parent/name-child/no-package-json/test.js' });
          assert.strictEqual(result.name, 'child');
       });
 
       it(`name-parent->child->missing (directory)`, () =>
       {
          const result = getPackage(
-            { filepath: './test/fixtures/packages/name/name-parent/name-child/no-package-json' });
+          { filepath: './test/fixtures/packages/name/name-parent/name-child/no-package-json' });
          assert.strictEqual(result.name, 'child');
       });
 
@@ -75,7 +75,7 @@ if (test.getPackage_name)
             filepath: './test/fixtures/packages/name/no-package-json/test.js',
             basepath: './test/fixtures/packages/name/no-package-json/'
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`no-package-json w/ basepath defined as file path`, () =>
@@ -84,7 +84,7 @@ if (test.getPackage_name)
             filepath: './test/fixtures/packages/name/no-package-json/test.js',
             basepath: './test/fixtures/packages/name/no-package-json/test.js'
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`no-package-json (directory) w/ basepath`, () =>
@@ -93,7 +93,7 @@ if (test.getPackage_name)
             filepath: './test/fixtures/packages/name/no-package-json',
             basepath: './test/fixtures/packages/name/no-package-json'
          });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
 
       it(`import.meta.url`, () =>
@@ -105,7 +105,7 @@ if (test.getPackage_name)
       it(`Dummy near root`, () =>
       {
          const result = getPackage({ filepath: `${path.sep}dummy-dir${path.sep}dummy-file.js` });
-         assert.strictEqual(result, void 0);
+         assert.isUndefined(result);
       });
    });
 }
