@@ -164,8 +164,8 @@ export function getPackageWithPath(options)
                   {
                      return {
                         packageObj: data.packageObj,
-                        packagePath: data.packagePath,
-                        packagePathUnix: TraversalData.toUnixPath(data.packagePath)
+                        filepath: data.packagePath,
+                        filepathUnix: TraversalData.toUnixPath(data.packagePath)
                      };
                   }
                }
@@ -173,8 +173,8 @@ export function getPackageWithPath(options)
                {
                   return {
                      packageObj: data.packageObj,
-                     packagePath: data.packagePath,
-                     packagePathUnix: TraversalData.toUnixPath(data.packagePath)
+                     filepath: data.packagePath,
+                     filepathUnix: TraversalData.toUnixPath(data.packagePath)
                   };
                }
 
@@ -190,7 +190,7 @@ export function getPackageWithPath(options)
    }
    catch (error)
    {
-      return { packagePath: data.packagePath, packagePathUnix: TraversalData.toUnixPath(data.packagePath), error };
+      return { filepath: data.packagePath, filepathUnix: TraversalData.toUnixPath(data.packagePath), error };
    }
 
    return { error: new Error(`No 'package.json' located`) };

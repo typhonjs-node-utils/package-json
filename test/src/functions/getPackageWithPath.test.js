@@ -16,14 +16,14 @@ if (test.getPackageWithPath)
       {
          const data = getPackageWithPath({ filepath: import.meta.url });
 
-         const packagePath = `${path.resolve('.')}${path.sep}package.json`;
+         const filepath = `${path.resolve('.')}${path.sep}package.json`;
 
          assert.strictEqual(data.packageObj.name, '@typhonjs-utils/package-json');
-         assert.strictEqual(data.packagePath, packagePath);
-         assert.strictEqual(data.packagePathUnix, TraversalData.toUnixPath(packagePath));
+         assert.strictEqual(data.filepath, filepath);
+         assert.strictEqual(data.filepathUnix, TraversalData.toUnixPath(filepath));
 
-         assert.isTrue(fs.existsSync(data.packagePath));
-         assert.isTrue(fs.existsSync(data.packagePathUnix));
+         assert.isTrue(fs.existsSync(data.filepath));
+         assert.isTrue(fs.existsSync(data.filepathUnix));
       });
 
       it('with callback function', () =>
@@ -33,14 +33,14 @@ if (test.getPackageWithPath)
             callback: (data) => typeof data.packageObj.name === 'string'
          });
 
-         const packagePath = `${path.resolve('./test/fixtures/packages/name')}${path.sep}package.json`;
+         const filepath = `${path.resolve('./test/fixtures/packages/name')}${path.sep}package.json`;
 
          assert.strictEqual(data.packageObj.name, 'base');
-         assert.strictEqual(data.packagePath, packagePath);
-         assert.strictEqual(data.packagePathUnix, TraversalData.toUnixPath(packagePath));
+         assert.strictEqual(data.filepath, filepath);
+         assert.strictEqual(data.filepathUnix, TraversalData.toUnixPath(filepath));
 
-         assert.isTrue(fs.existsSync(data.packagePath));
-         assert.isTrue(fs.existsSync(data.packagePathUnix));
+         assert.isTrue(fs.existsSync(data.filepath));
+         assert.isTrue(fs.existsSync(data.filepathUnix));
       });
 
       it('with callback function (test if unix paths exist / verify relativeDir)', () =>
