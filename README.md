@@ -16,9 +16,9 @@ queries made.
 
 When developing in an ES Module environment on Node these functions make it easy to retrieve any local `package.json` 
 through the use of a file path or file URL including `import.meta.url`. There are a few variations on specific 
-information retrieved from the located `package.json` such as the module type which is accomplished with 
-`getPackageType`. There is additional flexibility in finding a specific `package.json` as well through the use of an
-optional callback function that is invoked during traversal of the file system as each `package.json` is located.
+information retrieved from the loaded `package.json` such as the module type which is accomplished with 
+`getPackageType`. There is additional flexibility in finding a specific `package.json` through the use of an
+optional callback function that is invoked during traversal of the file system as each `package.json` is loaded.
 
 ### Installation:
 
@@ -34,7 +34,7 @@ There are five functions available as named exports:
 | getPackage          | Retrieves the package object specified by the query.                                          |
 | getPackageAndFormat | Retrieves the package object then returns the formatted result.                               |
 | getPackageType      | Retrieves the package object then returns the `type` property; either `module` or `commonjs`. |
-| getPackageWithPath  | Retrieves the package object and returns it with the path.                                    |
+| getPackageWithPath  | Retrieves the package object and returns it with the file path.                               |
 
 ### Package query object:
 While `formatPackage` accepts a loaded `package.json` object all other functions require a query object containing the 
