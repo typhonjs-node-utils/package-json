@@ -44,7 +44,7 @@ following data:
 | ---------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | filepath   | string / URL | Initial file or directory path to traverse for `package.json`.                                                                                              | 
 | [basepath] | string / URL | Optional: Base path to stop traversing. Set to the root path of `filepath` if not provided.                                                                 |
-| [callback] | Function     | Optional: A function that evaluates a loaded package.json object and associated traversal data returning a truthy value to stops or continue the traversal. |
+| [callback] | Function     | Optional: A function that evaluates a loaded package.json object and associated traversal data returning a truthy value to stop or continue the traversal.  |
 
 `filepath` is required and may be a file or directory path as a string or file URL including `import.meta.url`. It 
 should be noted that if the path references a file that this file does not need to exist, but the containing directory 

@@ -43,7 +43,7 @@
 
 /**
  * An optional callback function for {@link PackageQueryOptions} that evaluates a loaded package.json object and
- * associated traversal data returning a truthy value to stops or continue the traversal.
+ * associated traversal data returning a truthy value to stop or continue the traversal.
  *
  * @callback TraversalCallback
  *
