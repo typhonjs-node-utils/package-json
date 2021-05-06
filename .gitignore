@@ -5,4 +5,5 @@ npm-debug.log
 *-error.log
 /.nyc_output
 /coverage
+/lib
 node_modules
