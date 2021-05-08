@@ -46,6 +46,6 @@
     "prepublishOnly": "npm run types && npm run test",
     "test": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/**/*.test.js\"",
     "test-functions": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/functions/**/*.test.js\"",
-    "types": "npx -p typescript tsc ./src/typedef.js ./src/functions.js --noResolve --declaration --allowJs --emitDeclarationOnly --outDir ./lib && rollup --config"
+    "types": "npx -p typescript tsc ./src/functions.js --declaration --allowJs --emitDeclarationOnly --outDir ./lib && rollup --config"
   }
 }
