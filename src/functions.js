@@ -3,14 +3,12 @@ import path          from 'path';
 
 import TraversalData from './TraversalData.js';
 
-import { type }      from './typedef.js';  // eslint-disable-line no-unused-vars
-
 /**
  * Get essential info for the given package object consistently formatted.
  *
  * @param {object} packageObj - A loaded `package.json` object.
  *
- * @returns {type.PackageObjFormatted|undefined} The formatted package object or undefined.
+ * @returns {PackageObjFormatted|undefined} The formatted package object or undefined.
  */
 export function formatPackage(packageObj)
 {
@@ -58,7 +56,7 @@ export function formatPackage(packageObj)
    /**
     * Creates the PackageObjFormatted result.
     *
-    * @type {type.PackageObjFormatted}
+    * @type {PackageObjFormatted}
     */
    const packageData = {
       name,
@@ -89,7 +87,7 @@ export function formatPackage(packageObj)
  * Note: If malformed data is presented the result will undefined. Also note that a file may be specified that
  * does not exist and the directory will be resolved. If that directory exists then resolution will continue.
  *
- * @param {type.PackageQueryOptions} options - The package query options.
+ * @param {PackageQueryOptions} options - The package query options.
  *
  * @returns {object|undefined} Loaded `package.json` or undefined if an error has occurred or basepath or root
  *                             directory has been reached.
@@ -105,9 +103,9 @@ export function getPackage(options)
 /**
  * Attempts to find the nearest package.json via `getPackage` then passes the results to `formatPackage`.
  *
- * @param {type.PackageQueryOptions} options - The package query options.
+ * @param {PackageQueryOptions} options - The package query options.
  *
- * @returns {type.PackageObjFormatted|undefined} Formatted package.json or undefined.
+ * @returns {PackageObjFormatted|undefined} Formatted package.json or undefined.
  */
 export function getPackageAndFormat(options)
 {
@@ -121,9 +119,9 @@ export function getPackageAndFormat(options)
  * object / `PackageObjData`. Also note that a file may be specified that does not exist and the directory will be
  * resolved. If that directory exists then resolution will continue.
  *
- * @param {type.PackageQueryOptions} options - The package query options.
+ * @param {PackageQueryOptions} options - The package query options.
  *
- * @returns {type.PackageObjData} Loaded package.json / path or potentially an error.
+ * @returns {PackageObjData} Loaded package.json / path or potentially an error.
  */
 export function getPackageWithPath(options)
 {
@@ -209,7 +207,7 @@ export function getPackageWithPath(options)
  * Traversal stops at the first valid `package.json` file as this is how Node works. If the first found `package.json`
  * does not have a `type` field then `commonjs` is returned.
  *
- * @param {type.PackageQueryOptions} options - The package query options.
+ * @param {PackageQueryOptions} options - The package query options.
  *
  * @returns {string} Type of package - 'module' for ESM otherwise 'commonjs'.
  */

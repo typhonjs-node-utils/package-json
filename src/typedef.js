@@ -1,7 +1,7 @@
 /**
  * The returned data object from a `getPackageWithPath` query.
  *
- * @typedef {object} type.PackageObjData
+ * @typedef {object} PackageObjData
  *
  * @property {object|undefined}  [packageObj] - Loaded `package.json` object.
  *
@@ -15,7 +15,7 @@
 /**
  * The returned data object from formatting a `package.json` object.
  *
- * @typedef {object} type.PackageObjFormatted
+ * @typedef {object} PackageObjFormatted
  *
  * @property {string}   name - Name property.
  *
@@ -41,25 +41,25 @@
 /**
  * Defines the data object passed to the functions to perform a `package.json` query.
  *
- * @typedef {object} type.PackageQueryOptions
+ * @typedef {object} PackageQueryOptions
  *
  * @property {string|URL}  filepath - Initial file or directory path to search for `package.json`.
  *
  * @property {string|URL}  [basepath] - Base path to stop traversing. Set to the root path of `filepath` if not
  *                                      provided.
  *
- * @property {type.TraversalCallback}  [callback] - A function that evaluates a loaded package.json object and
+ * @property {TraversalCallback}  [callback] - A function that evaluates a loaded package.json object and
  *                                                 associated traversal data returning a truthy value to stops or
  *                                                 continue the traversal.
  */
 
 /**
- * An optional callback function for {@link type.PackageQueryOptions} that evaluates a loaded package.json object and
+ * An optional callback function for {@link PackageQueryOptions} that evaluates a loaded package.json object and
  * associated traversal data returning a truthy value to stop or continue the traversal.
  *
- * @callback type.TraversalCallback
+ * @callback TraversalCallback
  *
- * @param {type.TraversalDataObj} data - The traversal data object.
+ * @param {TraversalDataObj} data - The traversal data object.
  *
  * @returns {boolean} True to stop traversal / false to continue.
  */
@@ -68,7 +68,7 @@
  * Defines the data object passed to any traversal callback function. All paths are converted to Unix style paths,
  * so for instance on Windows `\` and `\\` are replaced with `/`.
  *
- * @typedef {object} type.TraversalDataObj
+ * @typedef {object} TraversalDataObj
  *
  * @property {string}   baseDir - Stores the `basepath` directory as a Unix styled path.
  *
@@ -84,5 +84,3 @@
  *
  * @property {string}   rootPath - The root path to stop traversal as a Unix styled path.
  */
-
-export const type = {};
