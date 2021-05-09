@@ -1,7 +1,7 @@
 {
   "name": "@typhonjs-utils/package-json",
   "description": "Provides several utility functions for working with and retrieving `package.json`.",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)",
   "type": "module",
   "main": "src/functions.js",
@@ -14,7 +14,7 @@
     "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
   ],
   "devDependencies": {
-    "@typhonjs-plugin/manager": "^0.0.1",
+    "@typhonjs-plugin/manager": "^0.0.5",
     "@typhonjs-utils/build-test": "^0.1.0",
     "rollup": "^2.0.0",
     "rollup-plugin-dts": "^3.0.0"
@@ -22,7 +22,7 @@
   "engines": {
     "node": ">=12"
   },
-  "types": "./types/functions.d.ts",
+  "types": "./types/index.d.ts",
   "files": [
     "/npm-shrinkwrap.json",
     "/src",
@@ -46,6 +46,6 @@
     "prepublishOnly": "npm run types && npm run test",
     "test": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/**/*.test.js\"",
     "test-functions": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/functions/**/*.test.js\"",
-    "types": "npx -p typescript tsc ./src/functions.js --declaration --allowJs --emitDeclarationOnly --outDir ./lib && rollup --config"
+    "types": "npx -p typescript tsc --project tsconfig.types.json && rollup --config rollup.config.types.js"
   }
 }
