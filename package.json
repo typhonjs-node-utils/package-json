@@ -1,7 +1,7 @@
 {
   "name": "@typhonjs-utils/package-json",
   "description": "Provides several utility functions for working with and retrieving `package.json`.",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "author": "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)",
   "type": "module",
   "main": "src/functions.js",
@@ -14,7 +14,7 @@
     "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
   ],
   "devDependencies": {
-    "@typhonjs-plugin/manager": "^0.0.5",
+    "@typhonjs-plugin/manager": "^0.0.10",
     "@typhonjs-utils/build-test": "^0.1.0",
     "rollup": "^2.0.0",
     "rollup-plugin-dts": "^3.0.0"
