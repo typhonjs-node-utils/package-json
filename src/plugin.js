@@ -16,6 +16,7 @@ export function onPluginLoad(ev)
    // Apply any plugin options.
    if (typeof options === 'object')
    {
+      /* c8 ignore next 1 */
       if (typeof options.guard === 'boolean') { guard = options.guard; }
    }
 
