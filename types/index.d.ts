@@ -85,7 +85,7 @@ type PackageQueryOptions = {
     callback?: TraversalCallback;
 };
 /**
- * An optional callback function for {@link PackageQueryOptions} that evaluates a loaded package.json object and
+ * An optional callback function for {@link PackageQueryOptions } that evaluates a loaded package.json object and
  * associated traversal data returning a truthy value to stop or continue the traversal.
  */
 type TraversalCallback = (data: TraversalDataObj) => boolean;
