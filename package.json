@@ -4,27 +4,26 @@
   "version": "0.6.0",
   "author": "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)",
   "type": "module",
-  "main": "src/functions.js",
-  "module": "src/functions.js",
   "exports": {
-    ".": "./src/functions.js",
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./src/functions.js"
+    },
     "./plugin": "./src/plugin.js"
   },
   "contributors": [
     "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
   ],
   "devDependencies": {
-    "@typhonjs-plugin/manager": "^0.0.10",
-    "@typhonjs-utils/build-test": "^0.1.0",
-    "rollup": "^2.0.0",
-    "rollup-plugin-dts": "^3.0.0"
+    "@typhonjs-build-test/node": "^0.0.10",
+    "@typhonjs-plugin/manager": "^0.0.17",
+    "rollup": "^4.9.4"
   },
   "engines": {
     "node": ">=12"
   },
   "types": "./types/index.d.ts",
   "files": [
-    "/npm-shrinkwrap.json",
     "/src",
     "/types"
   ],
@@ -46,6 +45,6 @@
     "prepublishOnly": "npm run types && npm run test",
     "test": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/**/*.test.js\"",
     "test-functions": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/functions/**/*.test.js\"",
-    "types": "npx -p typescript tsc --project tsconfig.types.json && rollup --config rollup.config.types.js"
+    "types": "esm-d-ts gen "
   }
 }
