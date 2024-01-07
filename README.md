@@ -3,12 +3,14 @@
 [![NPM](https://img.shields.io/npm/v/@typhonjs-utils/package-json.svg?label=npm)](https://www.npmjs.com/package/@typhonjs-utils/package-json)
 [![Code Style](https://img.shields.io/badge/code%20style-allman-yellowgreen.svg?style=flat)](https://en.wikipedia.org/wiki/Indent_style#Allman_style)
 [![License](https://img.shields.io/badge/license-MPLv2-yellowgreen.svg?style=flat)](https://github.com/typhonjs-node-utils/package-json/blob/main/LICENSE)
-[![Discord](https://img.shields.io/discord/737953117999726592?label=TyphonJS%20Discord)](https://discord.gg/mnbgN8f)
+[![Discord](https://img.shields.io/discord/737953117999726592?label=TyphonJS%20Discord)](https://typhonjs.io/discord/)
 [![Twitch](https://img.shields.io/twitch/status/typhonrt?style=social)](https://www.twitch.tv/typhonrt)
 
 Provides an ES Module with several utility functions for working with and retrieving `package.json` along with a 
 TyphonJS plugin for `Node.js v12.0+`. All of these functions are synchronous and there is no caching of results between
-queries made. API documentation is available here: https://typhonjs-node-utils.github.io/package-json/
+queries made. 
+
+[API documentation](https://typhonjs-node-utils.github.io/package-json/)
 
 ### Why:
 
