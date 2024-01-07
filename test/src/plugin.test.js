@@ -1,8 +1,8 @@
-import path                from 'path';
+import path                from 'node:path';
 
 import { assert }          from 'chai';
 
-import PluginManager       from '@typhonjs-plugin/manager';
+import { PluginManager }   from '@typhonjs-plugin/manager';
 
 import TraversalData       from '../../src/TraversalData.js';
 import test                from '../util/test.js';

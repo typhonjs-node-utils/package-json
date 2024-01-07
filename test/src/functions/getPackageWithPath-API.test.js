@@ -1,4 +1,5 @@
-import path                   from 'path';
+import fs                     from 'node:fs';
+import path                   from 'node:path';
 
 import { assert }             from 'chai';
 
@@ -6,7 +7,6 @@ import { getPackageWithPath } from '../../../src/functions.js';
 
 import TraversalData from '../../../src/TraversalData.js';
 import test          from '../../util/test.js';
-import fs            from "fs";
 
 if (test.getPackageWithPath_API)
 {
@@ -116,7 +116,7 @@ if (test.getPackageWithPath_API)
          assert.isTrue(fs.existsSync(filepathUnix));
 
          // On Windows the character position for the error is different so just check the start of the error message.
-         assert.isTrue(error.toString().startsWith('SyntaxError: Unexpected token B in JSON at position'));
+         assert.isTrue(error.toString().startsWith(`SyntaxError: Expected property name or '}' in JSON at position`));
       });
    });
 }
