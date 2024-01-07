@@ -185,7 +185,7 @@ registers the functions above on the plugin manager eventbus under the following
 
 An abbreviated pseudocode example of loading and using the plugin follows:
 ```js
-import PluginManager from '@typhonjs-plugin/manager';
+import { PluginManager } from '@typhonjs-plugin/manager';
 
 const pluginManager = new PluginManager();
 const eventbus = pluginManager.getEventbus();

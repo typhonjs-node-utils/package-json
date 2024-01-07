@@ -16,13 +16,11 @@
   ],
   "devDependencies": {
     "@typhonjs-build-test/node": "^0.0.10",
-    "@typhonjs-plugin/manager": "^0.0.17",
-    "rollup": "^4.9.4"
+    "@typhonjs-plugin/manager": "^0.0.17"
   },
   "engines": {
     "node": ">=12"
   },
-  "types": "./types/index.d.ts",
   "files": [
     "/src",
     "/types"
@@ -40,6 +38,7 @@
   },
   "repository": "github:typhonjs-node-utils/package-json",
   "scripts": {
+    "docs": "typedoc-pkg --api-link esm",
     "eslint": "eslint .",
     "posttest": "npm run eslint",
     "prepublishOnly": "npm run types && npm run test",
