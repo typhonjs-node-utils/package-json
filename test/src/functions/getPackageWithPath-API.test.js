@@ -115,6 +115,8 @@ if (test.getPackageWithPath_API)
          assert.isTrue(fs.existsSync(filepath));
          assert.isTrue(fs.existsSync(filepathUnix));
 
+         console.log(`!!! ERROR STRING: `, error.toString())
+
          // On Windows the character position for the error is different so just check the start of the error message.
          assert.isTrue(error.toString().startsWith(`SyntaxError: Expected property name or '}' in JSON at position`));
       });
