@@ -6,7 +6,7 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./types/index.d.ts",
+      "types": "./src/functions.d.ts",
       "import": "./src/functions.js"
     },
     "./plugin": "./src/plugin.js"
@@ -45,6 +45,6 @@
     "prepublishOnly": "npm run types && npm run test",
     "test": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/**/*.test.js\"",
     "test-functions": "c8 --reporter=lcov --reporter=text-summary mocha -colors \"test/src/functions/**/*.test.js\"",
-    "types": "esm-d-ts gen "
+    "types": "esm-d-ts gen src/functions.js"
   }
 }
