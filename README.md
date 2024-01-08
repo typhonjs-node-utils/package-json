@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/license-MPLv2-yellowgreen.svg?style=flat)](https://github.com/typhonjs-node-utils/package-json/blob/main/LICENSE)
 [![Build Status](https://github.com/typhonjs-node-utils/package-json/workflows/CI/CD/badge.svg)](#)
 [![Coverage](https://img.shields.io/codecov/c/github/typhonjs-node-utils/package-json.svg)](https://codecov.io/github/typhonjs-node-utils/package-json)
-[![API Docs](https://img.shields.io/badge/API%20Docs-476ff0)](https://typhonjs-node-utils.github.io/package-json/)
+[![API Docs](https://img.shields.io/badge/API%20Documentation-476ff0)](https://typhonjs-node-utils.github.io/package-json/)
 [![Discord](https://img.shields.io/discord/737953117999726592?label=TyphonJS%20Discord)](https://typhonjs.io/discord/)
 [![Twitch](https://img.shields.io/twitch/status/typhonrt?style=social)](https://www.twitch.tv/typhonrt)
 
