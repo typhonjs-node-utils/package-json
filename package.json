@@ -15,8 +15,9 @@
     "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
   ],
   "devDependencies": {
-    "@typhonjs-build-test/node": "^0.0.10",
-    "@typhonjs-plugin/manager": "^0.0.17"
+    "@typhonjs-build-test/node": "^0.0.11",
+    "@typhonjs-plugin/manager": "^0.1.0",
+    "@typhonjs-typedoc/typedoc-pkg": "^0.0.2"
   },
   "engines": {
     "node": ">=12"
